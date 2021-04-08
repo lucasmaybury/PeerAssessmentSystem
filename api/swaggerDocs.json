@@ -22,7 +22,7 @@
         "responses": {}
       }
     },
-    "/users/": {
+    "/api/users/": {
       "get": {
         "tags": [],
         "description": "",
