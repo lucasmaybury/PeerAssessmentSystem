@@ -14,11 +14,18 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/user/": {
+    "/user/{username}": {
       "get": {
         "tags": [],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {}
       }
     }
