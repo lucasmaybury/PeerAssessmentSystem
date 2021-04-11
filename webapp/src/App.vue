@@ -1,23 +1,27 @@
 <template>
   <div id="app">
-    <Dashboard />
+    <Header/>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-import Dashboard from './components/Dashboard.vue'
+import Header from './components/Header.vue'
 
 export default {
-  name: 'App',
+  name: 'app',
   components: {
-    Dashboard
+    Header
+  },
+  computed: {
+    username() {
+      return this.$route.params.username
+    }
+  },
+  methods: {
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    }
   }
 }
 </script>
-
-<style>
-  @import './assets/styles/global.css';
-</style>

@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node server.bundle.js",
     "build": "webpack",
-    "dev": "nodemon ./swagger",
+    "dev": "nodemon ./bin/www",
+    "predev": "node ./swagger.js",
+    "prebuild": "node ./swagger.js",
     "swagger-autogen": "node ./swagger.js"
   },
   "dependencies": {

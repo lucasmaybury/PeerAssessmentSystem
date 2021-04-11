@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node server.bundle.js",
     "build": "webpack",
-    "dev": "nodemon ./swagger",
+    "dev": "nodemon ./bin/www",
+    "predev": "node ./swagger.js",
+    "prebuild": "node ./swagger.js",
     "swagger-autogen": "node ./swagger.js"
   },
   "dependencies": {
@@ -25,10 +27,5 @@
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.11",
     "webpack-stream": "^5.2.1"
-  },
-  "nodemonConfig": {
-    "ignore": [
-      "swaggerDocs.json"
-    ]
   }
 }

@@ -1,15 +1,14 @@
 <template>
-  <div class="hello">
-    <Header />
+  <div>
     <div class="container mrgnbtm">
-          <div class="row">
-            <div class="col-md-8">
-                <CreateUser @createUser="userCreate($event)" />
-            </div>
-            <div class="col-md-4">
-                <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
+        <div class="row">
+          <div class="col-md-8">
+              <CreateUser @createUser="userCreate($event)" />
           </div>
+          <div class="col-md-4">
+              <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
+          </div>
+        </div>
     </div>
     <div class="row mrgnbtm">
         <Users v-if="users.length > 0" :users="users" />
@@ -18,7 +17,6 @@
 </template>
 
 <script>
-import Header from './Header.vue'
 import CreateUser from './CreateUser.vue'
 import DisplayBoard from './DisplayBoard.vue'
 import Users from './Users.vue'
@@ -27,7 +25,6 @@ import { getAllUsers, createUser } from '../services/UserService'
 export default {
   name: 'Dashboard',
   components: {
-    Header,
     CreateUser,
     DisplayBoard,
     Users

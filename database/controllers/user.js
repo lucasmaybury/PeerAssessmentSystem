@@ -1,4 +1,6 @@
-exports.getUserByUsername = function (req, res) {
+
+
+exports.getUserByUsername = (req, res) => {
     const user = {
         username: req.params.username || 'stranger',
         firstName: "Lucas",

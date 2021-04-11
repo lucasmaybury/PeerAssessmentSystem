@@ -12,6 +12,4 @@ const doc = {
 const outputFile = './swaggerDocs.json'
 const endpointsFiles = ['./app.js']
 
-swaggerAutogen(outputFile, endpointsFiles, doc).then( () => {
-    require('./bin/www');
-})
+swaggerAutogen(outputFile, endpointsFiles, doc);
