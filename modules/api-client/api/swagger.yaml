@@ -1,0 +1,29 @@
+---
+swagger: "2.0"
+info:
+  description: "Description"
+  version: "1.0.0"
+  title: "Peer Assessment System API"
+host: "localhost:3080"
+basePath: "/"
+tags: []
+schemes:
+- "http"
+paths:
+  /:
+    get:
+      tags: []
+      description: ""
+      operationId: "rootGET"
+      parameters: []
+      responses: {}
+      x-swagger-router-controller: "Default"
+  /api/user/:
+    get:
+      tags: []
+      description: ""
+      operationId: "apiUserGET"
+      parameters: []
+      responses: {}
+      x-swagger-router-controller: "Default"
+definitions: {}
