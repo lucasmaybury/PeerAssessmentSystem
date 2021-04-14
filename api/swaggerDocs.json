@@ -22,6 +22,21 @@
         "responses": {}
       }
     },
+    "/api/user/{username}": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/api/user/": {
       "get": {
         "tags": [],

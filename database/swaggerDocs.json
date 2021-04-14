@@ -28,6 +28,14 @@
         ],
         "responses": {}
       }
+    },
+    "/user/": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
     }
   },
   "definitions": {}

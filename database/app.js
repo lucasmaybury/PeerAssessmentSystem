@@ -3,11 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swaggerDocs.json');
-
-const userRouter = require('./routes/user');
 
 const app = express();
 
@@ -21,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use('/user', userRouter);
+app.use('/user', require('./routes/user'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
