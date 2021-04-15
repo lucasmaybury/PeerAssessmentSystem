@@ -14,12 +14,12 @@
 
 <script>
 export default {
-  name: "DisplayBoard",
-  props: ["numberOfUsers"],
+  name: 'DisplayBoard',
+  props: ['numberOfUsers'],
   methods: {
     getAllUsers() {
-      this.$emit("getAllUsers");
-    }
-  }
+      this.$emit('getAllUsers');
+    },
+  },
 };
 </script>

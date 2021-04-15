@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import "../assets/styles/global.css";
+import '../assets/styles/global.css';
 
 export default {
-  name: "Header"
+  name: 'Header',
 };
 </script>

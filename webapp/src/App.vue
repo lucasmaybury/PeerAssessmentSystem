@@ -6,22 +6,22 @@
 </template>
 
 <script>
-import Header from "./components/Header.vue";
+import Header from './components/Header.vue';
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
-    Header
+    Header,
   },
   computed: {
     username() {
       return this.$route.params.username;
-    }
+    },
   },
   methods: {
     goBack() {
-      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
-    }
-  }
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
+    },
+  },
 };
 </script>
