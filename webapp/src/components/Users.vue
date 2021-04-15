@@ -18,8 +18,8 @@
         <tbody>
           <tr v-for="item in users" :key="item.id">
             <td>{{ item.username }}</td>
-            <td>{{ item.firstName }}</td>
-            <td>{{ item.lastName }}</td>
+            <td>{{ item.first_name }}</td>
+            <td>{{ item.last_name }}</td>
             <td>{{ item.role }}</td>
           </tr>
         </tbody>

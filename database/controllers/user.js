@@ -1,9 +1,8 @@
-const db = require('../services/db.js');
+const db = require('../services/db');
 
 exports.getUserByUsername = (req, res) => {
-  console.log(req.headers);
   const user = {
-    username: req.params.username || 'stranger',
+    username: 'user1',
     firstName: 'Lucas',
     lastName: 'Maybury',
     role: '2',
@@ -12,19 +11,10 @@ exports.getUserByUsername = (req, res) => {
 };
 
 exports.getUsers = (req, res) => {
-  const users = [
-    {
-      username: 'user1',
-      firstName: 'Lucas',
-      lastName: 'Maybury',
-      role: '2',
-    },
-    {
-      username: 'user2',
-      firstName: 'Dylan',
-      lastName: 'Maybury',
-      role: '2',
-    },
-  ];
-  res.json(users);
+  db.query(`SELECT * FROM user`)
+    .then(data => res.json(data))
+    .catch(err => {
+      console.error(err);
+      res.send(err);
+    });
 };

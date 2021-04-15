@@ -1,7 +1,7 @@
 const util = require('util');
 const mysql = require('mysql');
 
-const pool = mysql.createPool({
+const db = mysql.createPool({
   connectionLimit: process.env.DB_CONLIMIT,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -10,7 +10,7 @@ const pool = mysql.createPool({
 });
 
 // Ping database to check for common exception errors.
-pool.getConnection((err, connection) => {
+db.getConnection((err, connection) => {
   if (err) {
     if (err.code === 'PROTOCOL_CONNECTION_LOST') {
       console.error('Database connection was closed.');
@@ -27,7 +27,6 @@ pool.getConnection((err, connection) => {
   return;
 });
 
-// Promisify for Node.js async/await.
-pool.query = util.promisify(pool.query);
+db.query = util.promisify(db.query);
 
-module.exports = pool;
+module.exports = db;
