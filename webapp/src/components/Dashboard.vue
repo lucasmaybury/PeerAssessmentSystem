@@ -1,61 +1,54 @@
 <template>
-  <div class="hello">
-    <Header />
+  <div>
     <div class="container mrgnbtm">
-          <div class="row">
-            <div class="col-md-8">
-                <CreateUser @createUser="userCreate($event)" />
-            </div>
-            <div class="col-md-4">
-                <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
-          </div>
+      <div class="row">
+        <div class="col-md-8">
+          <CreateUser @createUser="userCreate($event)" />
+        </div>
+        <div class="col-md-4">
+          <DisplayBoard @getUsers="getUsers()" />
+        </div>
+      </div>
     </div>
     <div class="row mrgnbtm">
-        <Users v-if="users.length > 0" :users="users" />
+      <Users v-if="users.length > 0" :users="users" />
     </div>
   </div>
 </template>
 
 <script>
-import Header from './Header.vue'
-import CreateUser from './CreateUser.vue'
-import DisplayBoard from './DisplayBoard.vue'
-import Users from './Users.vue'
-import { getAllUsers, createUser } from '../services/UserService'
+import CreateUser from './CreateUser.vue';
+import DisplayBoard from './DisplayBoard.vue';
+import Users from './Users.vue';
+import {
+  getUsers,
+  //getUserByUsername,
+  //createUser,
+} from '../services/UserService';
 
 export default {
   name: 'Dashboard',
   components: {
-    Header,
     CreateUser,
     DisplayBoard,
-    Users
+    Users,
   },
   data() {
-      return {
-          users: [],
-          numberOfUsers: 0
-      }
+    return {
+      users: [],
+    };
   },
   methods: {
-    getAllUsers() {
-      getAllUsers().then(response => {
-        console.log(response)
-        this.users = response
-        this.numberOfUsers = this.users.length
-      })
-    },
-    userCreate(data) {
-      console.log('data:::', data)
-      createUser(data).then(response => {
+    getUsers() {
+      getUsers().then(response => {
         console.log(response);
-        this.getAllUsers();
+        this.users = response;
+        this.numberOfUsers = this.users.length;
       });
-    }
+    },
   },
-  mounted () {
+  mounted() {
     this.getAllUsers();
-  }
-}
+  },
+};
 </script>
