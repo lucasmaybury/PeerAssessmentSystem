@@ -1,3 +1,5 @@
+const db = require('../services/db.js');
+
 exports.getUserByUsername = (req, res) => {
   console.log(req.headers);
   const user = {
@@ -22,7 +24,7 @@ exports.getUsers = (req, res) => {
       firstName: 'Dylan',
       lastName: 'Maybury',
       role: '2',
-    }
+    },
   ];
   res.json(users);
 };

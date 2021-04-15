@@ -6,10 +6,12 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swaggerDocs.json');
+const dotenv = require('dotenv');
 
 const app = express();
 
 // view engine setup
+dotenv.config()
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
