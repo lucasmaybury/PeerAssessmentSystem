@@ -23,3 +23,5 @@ export default new Router({
     },
   ],
 });
+
+//adapted from https://www.freecodecamp.org/news/how-to-use-routing-in-vue-js-to-create-a-better-user-experience-98d225bbcdd9/

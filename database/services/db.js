@@ -30,3 +30,5 @@ db.getConnection((err, connection) => {
 db.query = util.promisify(db.query);
 
 module.exports = db;
+
+//adapted from https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
