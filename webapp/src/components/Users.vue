@@ -13,14 +13,20 @@
             <th>Firstname</th>
             <th>Lastname</th>
             <th>Role</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in users" :key="item.id">
-            <td>{{ item.username }}</td>
+            <td>{{ item.id }}</td>
             <td>{{ item.first_name }}</td>
             <td>{{ item.last_name }}</td>
             <td>{{ item.role }}</td>
+            <td>
+              <fa icon="file-alt" class="mr-2" />
+              <fa icon="edit" class="mr-2" />
+              <fa icon="trash-alt" class="mr-2" />
+            </td>
           </tr>
         </tbody>
       </table>

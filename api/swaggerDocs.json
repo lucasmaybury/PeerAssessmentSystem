@@ -43,6 +43,16 @@
         "description": "",
         "parameters": [],
         "responses": {}
+      },
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     }
   },

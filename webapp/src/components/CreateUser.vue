@@ -3,80 +3,92 @@
     <div class="row">
       <div class="col-md-7 mrgnbtm">
         <h2>Create User</h2>
-        <form>
-          <div class="row">
-            <div class="form-group col-md-6">
-              <label htmlFor="exampleInputEmail1">First Name</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="firstName"
-                name="firstname"
-                id="firstname"
-                aria-describedby="emailHelp"
-                placeholder="First Name"
-              />
-            </div>
-            <div class="form-group col-md-6">
-              <label htmlFor="exampleInputPassword1">Last Name</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="lastName"
-                name="lastname"
-                id="lastname"
-                placeholder="Last Name"
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-12">
-              <label htmlFor="exampleInputEmail1">Email</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="email"
-                name="email"
-                id="email"
-                aria-describedby="emailHelp"
-                placeholder="Email"
-              />
-            </div>
-          </div>
-          <button type="button" @click="createUser()" class="btn btn-danger">
-            Create
-          </button>
-        </form>
+        <b-form @submit.prevent="createUser()" @reset="clearForm()">
+          <b-form-group
+            id="username-group"
+            label="Username"
+            label-for="username-input"
+          >
+            <b-form-input
+              type="text"
+              id="username-input"
+              v-model="id"
+              placeholder="Username"
+              inline
+            />
+          </b-form-group>
+
+          <b-form-group
+            id="firstName-group"
+            label="First Name"
+            label-for="firstname-input"
+          >
+            <b-form-input
+              type="text"
+              id="firstName-input"
+              v-model="firstName"
+              placeholder="First Name"
+            />
+          </b-form-group>
+
+          <b-form-group
+            id="lastname-group"
+            label="Last Name"
+            label-for="lastName-input"
+          >
+            <b-form-input
+              type="text"
+              id="lastName-input"
+              v-model="lastName"
+              placeholder="Last Name"
+            />
+          </b-form-group>
+
+          <b-form-group id="role-group" label="Role" label-for="lastName-input">
+            <b-form-input type="number" id="role-input" v-model="role" />
+          </b-form-group>
+
+          <b-form-group id="buttons-group">
+            <b-button type="submit" variant="primary"> Create </b-button>
+            <b-button type="reset" variant="danger"> Reset </b-button>
+          </b-form-group>
+        </b-form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+const userService = require('../services/UserService');
+
 export default {
   name: 'CreateUser',
   data() {
     return {
-      firstName: '',
-      lastName: '',
-      email: '',
+      id: 'testuser',
+      firstName: 'test',
+      lastName: 'user',
+      role: 1,
     };
   },
   methods: {
-    createUser() {
-      console.log(this.firstName);
-      const payload = {
+    async createUser() {
+      const user = {
+        id: this.id,
         firstName: this.firstName,
         lastName: this.lastName,
-        email: this.email,
+        role: this.role,
       };
-      this.$emit('createUser', payload);
+      let response = await userService.createUser(user);
+      let message = await response.text();
+      console.log(message);
       this.clearForm();
     },
     clearForm() {
+      this.id = '';
       this.firstName = '';
       this.lastName = '';
-      this.email = '';
+      this.role = null;
     },
   },
 };

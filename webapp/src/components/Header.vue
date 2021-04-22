@@ -1,8 +1,8 @@
 <template>
   <b-navbar toggleable="lg" variant="info">
-    <b-nav-item-brand>
+    <b-navbar-brand>
       <b-button to="/">PAS - Peer Assessment System</b-button>
-    </b-nav-item-brand>
+    </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse" />
     <b-collapse id="nav-collapse" is-nav>

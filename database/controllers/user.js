@@ -34,3 +34,20 @@ function getUsersFiltered(filters) {
       .catch(err => reject(err));
   });
 }
+
+exports.createUser = (req, res) => {
+  console.log('creating user:');
+  console.log(req.body);
+  let user = req.body['user'];
+  let query = `INSERT INTO user VALUES ('${user.id}', '${user.firstName}', '${user.lastName}', '${user.role}')`;
+  console.log(query);
+  db.query(query)
+    .then(data => {
+      console.log(data);
+      res.status(201).send('success');
+    })
+    .catch(err => {
+      console.error(err.message);
+      res.status(500).json({ message: err.message });
+    });
+};
