@@ -12,14 +12,28 @@ export default new Router({
       component: () => import('./components/Dashboard.vue'),
     },
     {
-      path: '/user/new',
-      name: 'Add new student',
-      component: () => import('./components/CreateUser'),
-    },
-    {
+      /* User Index */
       path: '/user',
       name: 'Users',
-      component: () => import('./components/Users'),
+      component: () => import('./components/User/Index.vue'),
+    },
+    {
+      /* User Create */
+      path: '/user/new',
+      name: 'Add new student',
+      component: () => import('./components/User/Create.vue'),
+    },
+    {
+      /* User View */
+      path: '/user/:id/view',
+      name: 'View a student',
+      component: () => import('./components/User/View.vue'),
+    },
+    {
+      /* User Edit */
+      path: '/user/:id/view',
+      name: 'Edit a student',
+      component: () => import('./components/User/Edit.vue'),
     },
   ],
 });

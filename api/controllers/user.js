@@ -39,10 +39,10 @@ exports.createUser = (req, res) => {
     .then(response => response.json())
     .then(response => {
       if (response.status != 201) throw new Error(response.message);
-      res.send(response);
+      res.status(201).json({ message: response.message });
     })
     .catch(err => {
       console.error(err);
-      res.status(500).send(err.message);
+      res.status(500).json({ message: err.message });
     });
 };

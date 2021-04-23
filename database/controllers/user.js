@@ -36,15 +36,15 @@ function getUsersFiltered(filters) {
 }
 
 exports.createUser = (req, res) => {
+  let user = req.body
   console.log('creating user:');
-  console.log(req.body);
-  let user = req.body['user'];
+  console.log(user);
   let query = `INSERT INTO user VALUES ('${user.id}', '${user.firstName}', '${user.lastName}', '${user.role}')`;
   console.log(query);
   db.query(query)
     .then(data => {
       console.log(data);
-      res.status(201).send('success');
+      res.status(201).json({ message: 'success' });
     })
     .catch(err => {
       console.error(err.message);

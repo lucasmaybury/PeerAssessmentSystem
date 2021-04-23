@@ -59,7 +59,7 @@
 </template>
 
 <script>
-const userService = require('../services/UserService');
+const userService = require('../../services/UserService');
 
 export default {
   name: 'CreateUser',
