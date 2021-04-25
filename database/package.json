@@ -47,7 +47,11 @@
       "eslint:recommended",
       "prettier"
     ],
-    "rules": {}
+    "rules": {},
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    }
   },
   "prettier": {
     "tabWidth": 2,

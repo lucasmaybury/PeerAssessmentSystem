@@ -1,11 +1,18 @@
 const db = require('../services/db');
+const helper = require('./helper.js');
 
 exports.getUserByUsername = (req, res) => {
   getUsersFiltered({ id: req.params.username })
-    .then(data => res.json(data))
+    .then(data => {
+      if (data.length == 0) {
+        res.status(404).send('Not Found');
+      } else {
+        res.json(data);
+      }
+    })
     .catch(err => {
       console.error(err);
-      res.send(err);
+      res.status(err.status || 500).send(err.message);
     });
 };
 
@@ -14,7 +21,7 @@ exports.getUsers = (req, res) => {
     .then(data => res.json(data))
     .catch(err => {
       console.error(err);
-      res.send(err);
+      res.status(err.status || 500).send(err.message);
     });
 };
 
@@ -27,16 +34,13 @@ function getUsersFiltered(filters) {
     let query = `SELECT * FROM user ${whereClauses != '' ? 'WHERE ' + whereClauses : ''}`;
     console.log(query);
     db.query(query)
-      .then(data => {
-        console.log(data);
-        resolve(data);
-      })
-      .catch(err => reject(err));
+      .then(data => resolve(data))
+      .catch(err => reject(helper.handleSQLError(err)));
   });
 }
 
 exports.createUser = (req, res) => {
-  let user = req.body
+  let user = req.body;
   console.log('creating user:');
   console.log(user);
   let query = `INSERT INTO user VALUES ('${user.id}', '${user.firstName}', '${user.lastName}', '${user.role}')`;
@@ -47,7 +51,7 @@ exports.createUser = (req, res) => {
       res.status(201).json({ message: 'success' });
     })
     .catch(err => {
-      console.error(err.message);
-      res.status(500).json({ message: err.message });
+      console.error(err);
+      res.status(500).send(helper.getSQLErrorMessage(err));
     });
 };

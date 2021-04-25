@@ -34,8 +34,9 @@ export default {
       console.log(user);
       let response = await userService.createUser(user);
       console.log(response);
-      if (response.status == 201) {
+      if (response.ok) {
         alert('user created');
+        this.$refs.form.reset();
       } else {
         console.error(response['message']);
         alert(response['message']);

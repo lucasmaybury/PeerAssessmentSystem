@@ -1,14 +1,15 @@
 const fetch = require('node-fetch');
+const helper = require('./helper.js');
 
 exports.getUserByUsername = (req, res) => {
   fetch(`http://localhost:3081/user/${req.params.username}`, {
     method: 'GET',
   })
-    .then(response => response.json())
-    .then(data => res.send(data))
+    .then(helper.checkStatus)
+    .then(data => res.send(data[0]))
     .catch(err => {
-      console.log(err);
-      res.send(err);
+      console.error(err);
+      res.status(err.status || 500).send(err.message);
     });
 };
 
@@ -17,11 +18,11 @@ exports.getUsers = (req, res) => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
-    .then(response => response.json())
+    .then(helper.checkStatus)
     .then(data => res.send(data))
     .catch(err => {
       console.error(err);
-      res.send(err);
+      res.status(err.status || 500).send(err.message);
     });
 };
 
@@ -36,13 +37,10 @@ exports.createUser = (req, res) => {
     },
     body: JSON.stringify(req.body),
   })
-    .then(response => response.json())
-    .then(response => {
-      if (response.status != 201) throw new Error(response.message);
-      res.status(201).json({ message: response.message });
-    })
+    .then(helper.checkStatus)
+    .then(response => res.status(201).json({ message: response.message }))
     .catch(err => {
       console.error(err);
-      res.status(500).json({ message: err.message });
+      res.status(err.status || 500).send(err.message);
     });
 };

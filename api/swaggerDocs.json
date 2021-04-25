@@ -34,7 +34,11 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/api/user/": {
@@ -42,7 +46,11 @@
         "tags": [],
         "description": "",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       },
       "post": {
         "tags": [],
