@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const helper = require('./helper.js');
 
 exports.getUserByUsername = (req, res) => {
+  console.log('getting user: ' + req.params.username);
   fetch(`http://localhost:3081/user/${req.params.username}`, {
     method: 'GET',
   })
@@ -37,7 +38,34 @@ exports.createUser = (req, res) => {
     .catch(err => res.status(err.status || 500).send(err.message));
 };
 
+exports.updateUser = (req, res) => {
+  console.log('updating user:');
+  console.log(req.body);
+  fetch('http://localhost:3081/user', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'user-agent': 'localhost:3080',
+    },
+    body: JSON.stringify(req.body),
+  })
+    .then(helper.checkStatus)
+    .then(response => res.status(201).json({ message: response.message }))
+    .catch(err => res.status(err.status || 500).send(err.message));
+};
+
 exports.deleteUser = (req, res) => {
   console.log('deleting user:');
   console.log(req.body);
+  fetch('http://localhost:3081/user', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'user-agent': 'localhost:3080',
+    },
+    body: JSON.stringify(req.body),
+  })
+    .then(helper.checkStatus)
+    .then(response => res.status(201).json({ message: response.message }))
+    .catch(err => res.status(err.status || 500).send(err.message));
 };

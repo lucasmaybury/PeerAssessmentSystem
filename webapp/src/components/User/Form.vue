@@ -10,6 +10,7 @@
         id="username-input"
         v-model="values.id"
         placeholder="Username"
+        :readonly="readOnlyId"
         inline
         required
       />
@@ -63,13 +64,16 @@
 export default {
   name: 'UserForm',
   props: {
-    defaultValues: {
-      type: Object,
-      required: false,
-    },
+    defaultValues: Object,
+    readOnlyId: Boolean,
     confirmText: {
       type: String,
       required: true,
+    },
+  },
+  watch: {
+    defaultValues: function(val) {
+      this.values = val;
     },
   },
   data() {
@@ -82,12 +86,7 @@ export default {
       this.$emit('confirm', this.values);
     },
     reset() {
-      this.values = this.defaultValues || {
-        id: '',
-        firstName: '',
-        lastName: '',
-        role: null,
-      };
+      this.values = this.defaultValues;
     },
   },
   mounted() {

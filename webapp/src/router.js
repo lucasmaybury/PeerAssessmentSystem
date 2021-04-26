@@ -31,7 +31,7 @@ export default new Router({
     },
     {
       /* User Edit */
-      path: '/user/:id/view',
+      path: '/user/:id/edit',
       name: 'Edit a student',
       component: () => import('./components/User/Edit.vue'),
     },

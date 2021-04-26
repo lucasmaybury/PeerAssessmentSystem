@@ -1,53 +1,54 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-md-7 mrgnbtm">
+    <b-row>
+      <b-col>
         <h2>Edit User</h2>
-        <b-form
-          @submit.prevent="createUser()"
-          @reset="clearForm()"
-          v-model="user"
-        >
-        </b-form>
-      </div>
-    </div>
+        <user-form
+          @confirm="updateUser"
+          :defaultValues="currentUser"
+          confirmText="Update"
+          ref="form"
+          :readOnlyId="true"
+        />
+      </b-col>
+    </b-row>
   </div>
 </template>
 
 <script>
+import Form from './Form.vue';
 const userService = require('../../services/UserService');
 
 export default {
-  name: 'CreateUser',
+  name: 'EditUser',
+  components: {
+    UserForm: Form,
+  },
   data() {
     return {
-      user: {
-        id: 'testuser',
-        firstName: 'test',
-        lastName: 'user',
-        role: 1,
-      },
+      currentUser: {},
     };
   },
   methods: {
-    async createUser() {
-      const user = {
-        id: this.id,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        role: this.role,
-      };
-      let response = await userService.createUser(user);
-      let message = await response.text();
-      console.log(message);
-      this.clearForm();
+    async updateUser(user) {
+      console.log('updating user:');
+      console.log(user);
+      let response = await userService.updateUser(user);
+      console.log(response);
+      if (response.ok) {
+        alert('user updated');
+        this.$refs.form.reset();
+      } else {
+        console.error(response['message']);
+        alert(response['message']);
+      }
     },
-    clearForm() {
-      this.id = '';
-      this.firstName = '';
-      this.lastName = '';
-      this.role = null;
-    },
+  },
+  async mounted() {
+    this.currentUser = await userService.getUserByUsername(
+      this.$route.params.id
+    );
+    // .then(user => (this.currentUser = user));
   },
 };
 </script>

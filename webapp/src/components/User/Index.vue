@@ -1,5 +1,20 @@
 <template>
   <b-container>
+    <b-modal ref="modal" id="modalDelete" title="Delete User?">
+      <p>
+        Are you sure you want to delete {{ userToDelete.firstName }}
+        {{ userToDelete.lastName }}?
+      </p>
+      <div slot="modal-footer">
+        <b-button variant="danger" @click="confirmDelete()" class="mr-2">
+          Confirm
+        </b-button>
+        <b-button variant="secondary" @click="$bvModal.hide('modalDelete')">
+          Cancel
+        </b-button>
+      </div>
+    </b-modal>
+
     <b-row class="m-1">
       <h3>Users</h3>
       <b-button to="/user/new" class="ml-auto">Add New</b-button>
@@ -19,8 +34,8 @@
         <tbody>
           <tr v-for="user in users" :key="user.id">
             <td>{{ user.id }}</td>
-            <td>{{ user.first_name }}</td>
-            <td>{{ user.last_name }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
             <td>{{ user.role }}</td>
             <td>
               <b-link :to="`/user/${user.id}/view`">
@@ -31,7 +46,11 @@
                 <b-icon icon="pencil-square" variant="dark" />
               </b-link>
 
-              <b-icon icon="trash" @click="deleteUser(user)" variant="dark" />
+              <b-icon
+                icon="trash"
+                @click="showDeleteModal(user)"
+                variant="dark"
+              />
             </td>
           </tr>
         </tbody>
@@ -41,13 +60,14 @@
 </template>
 
 <script>
-import { getUsers } from '../../services/UserService';
+import { getUsers, deleteUser } from '../../services/UserService';
 
 export default {
   name: 'Users',
   data: () => {
     return {
       users: [],
+      userToDelete: {},
     };
   },
   methods: {
@@ -56,10 +76,14 @@ export default {
         this.users = response;
       });
     },
-    deleteUser(user) {
-      confirm(
-        `Are you sure you want to delete ${user.firstName} ${user.lastName}?`
-      );
+    showDeleteModal(user) {
+      this.userToDelete = user;
+      this.$bvModal.show('modalDelete');
+    },
+    async confirmDelete() {
+      await deleteUser(this.userToDelete);
+      this.$bvModal.hide('modalDelete');
+      this.getUsers();
     },
   },
   mounted() {

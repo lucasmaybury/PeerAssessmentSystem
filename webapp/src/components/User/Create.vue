@@ -1,11 +1,16 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-md-7 mrgnbtm">
+    <b-row>
+      <b-col>
         <h2>Create User</h2>
-        <user-form @confirm="createUser" confirmText="Create" ref="form" />
-      </div>
-    </div>
+        <user-form
+          @confirm="createUser"
+          :defaultValues="blankUser"
+          confirmText="Create"
+          ref="form"
+        />
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -20,11 +25,11 @@ export default {
   },
   data() {
     return {
-      user: {
-        id: 'test',
-        firstName: 'test',
-        lastName: 'user',
-        role: 1,
+      blankUser: {
+        id: '',
+        firstName: '',
+        lastName: '',
+        role: null,
       },
     };
   },
@@ -32,15 +37,10 @@ export default {
     async createUser(user) {
       console.log('creating user:');
       console.log(user);
-      let response = await userService.createUser(user);
-      console.log(response);
-      if (response.ok) {
+      await userService.createUser(user).then(() => {
+        this.$router.push('/user');
         alert('user created');
-        this.$refs.form.reset();
-      } else {
-        console.error(response['message']);
-        alert(response['message']);
-      }
+      });
     },
   },
 };

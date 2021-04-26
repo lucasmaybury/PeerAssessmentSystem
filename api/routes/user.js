@@ -7,6 +7,8 @@ router.route('/:username').get(user.getUserByUsername);
 router
   .route('/')
   .get(user.getUsers)
-  .post(user.createUser);
+  .post(user.createUser)
+  .put(user.updateUser)
+  .delete(user.deleteUser);
 
 module.exports = router;

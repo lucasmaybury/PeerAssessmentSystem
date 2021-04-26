@@ -4,10 +4,12 @@ const router = express.Router();
 const user = require('../controllers/user');
 
 /* GET user listing. */
-router.route('/:username').get(user.getUserByUsername);
+router.route('/:id').get(user.getById);
 router
   .route('/')
-  .get(user.getUsers)
-  .post(user.createUser);
+  .get(user.getAll)
+  .post(user.create)
+  .put(user.update)
+  .delete(user.delete);
 
 module.exports = router;

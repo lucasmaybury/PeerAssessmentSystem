@@ -53,6 +53,16 @@
             "description": "Created"
           }
         }
+      },
+      "put": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
       }
     }
   },

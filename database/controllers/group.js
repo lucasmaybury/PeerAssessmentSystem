@@ -1,7 +1,7 @@
 const { User, Group } = require('../services/db');
 const helper = require('./helper');
 
-exports.getGroupById = (req, res) => {
+exports.getGroupById = async (req, res) => {
   Group.findByPk(req.params.username, { include: User })
     .then(data => {
       if (data.length === 0) {
@@ -16,7 +16,7 @@ exports.getGroupById = (req, res) => {
     });
 };
 
-exports.getGroups = (req, res) => {
+exports.getGroups = async (req, res) => {
   Group.findAll({ include: User })
     .then(data => res.send(data))
     .catch(err => {
@@ -25,7 +25,7 @@ exports.getGroups = (req, res) => {
     });
 };
 
-exports.createGroup = (req, res) => {
+exports.createGroup = async (req, res) => {
   let user = req.body;
   Group.create(user)
     .then(data => {
