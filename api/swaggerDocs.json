@@ -34,11 +34,7 @@
             "type": "string"
           }
         ],
-        "responses": {
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "responses": {}
       }
     },
     "/api/user/": {
@@ -46,11 +42,7 @@
         "tags": [],
         "description": "",
         "parameters": [],
-        "responses": {
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
+        "responses": {}
       },
       "post": {
         "tags": [],
@@ -59,9 +51,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }

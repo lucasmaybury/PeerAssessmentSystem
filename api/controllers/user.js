@@ -7,23 +7,18 @@ exports.getUserByUsername = (req, res) => {
   })
     .then(helper.checkStatus)
     .then(data => res.send(data[0]))
-    .catch(err => {
-      console.error(err);
-      res.status(err.status || 500).send(err.message);
-    });
+    .catch(err => res.status(err.status || 500).send(err.message));
 };
 
 exports.getUsers = (req, res) => {
+  console.log('getting users');
   fetch('http://localhost:3081/user', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
     .then(helper.checkStatus)
     .then(data => res.send(data))
-    .catch(err => {
-      console.error(err);
-      res.status(err.status || 500).send(err.message);
-    });
+    .catch(err => res.status(err.status || 500).send(err.message));
 };
 
 exports.createUser = (req, res) => {
@@ -39,8 +34,10 @@ exports.createUser = (req, res) => {
   })
     .then(helper.checkStatus)
     .then(response => res.status(201).json({ message: response.message }))
-    .catch(err => {
-      console.error(err);
-      res.status(err.status || 500).send(err.message);
-    });
+    .catch(err => res.status(err.status || 500).send(err.message));
+};
+
+exports.deleteUser = (req, res) => {
+  console.log('deleting user:');
+  console.log(req.body);
 };
