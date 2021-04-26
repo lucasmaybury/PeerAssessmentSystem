@@ -6,7 +6,7 @@ exports.getUserByUsername = (req, res) => {
     method: 'GET',
   })
     .then(helper.checkStatus)
-    .then(data => res.send(data[0]))
+    .then(data => res.send(data))
     .catch(err => res.status(err.status || 500).send(err.message));
 };
 

@@ -1,34 +1,26 @@
-const util = require('util');
-const mysql = require('mysql');
+const Sequelize = require('sequelize');
 
-const db = mysql.createPool({
-  connectionLimit: process.env.DB_CONLIMIT,
+const sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  dialect: process.env.DB_DIALECT,
+  operatorsAliases: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
 });
 
-// Ping database to check for common exception errors.
-db.getConnection((err, connection) => {
-  if (err) {
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      console.error('Database connection was closed.');
-    }
-    if (err.code === 'ER_CON_COUNT_ERROR') {
-      console.error('Database has too many connections.');
-    }
-    if (err.code === 'ECONNREFUSED') {
-      console.error('Database connection was refused.');
-    }
-    console.error(err);
-  }
-  if (connection) connection.release();
-  return;
-});
+let db = {};
 
-db.query = util.promisify(db.query);
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-module.exports = db;
+let User = require('./models/user.model.js')(sequelize, Sequelize);
+let Group = require('./models/group.model.js')(sequelize, Sequelize);
 
-//adapted from https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
+User.belongsToMany(Group, {through: 'Membership'});
+Group.belongsToMany(User, {through: 'Membership'});
+
+module.exports = { db, User, Group };

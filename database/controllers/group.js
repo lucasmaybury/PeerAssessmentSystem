@@ -1,9 +1,9 @@
-const { User } = require('../services/db');
+const { User, Group } = require('../services/db');
 
-exports.getUserByUsername = (req, res) => {
-  User.findByPk(req.params.username)
+exports.getGroupById = (req, res) => {
+  Group.findByPk(req.params.username, { include: User })
     .then(data => {
-      if (!data) {
+      if (data.length === 0) {
         res.status(404).send('Not Found');
       } else {
         res.json(data);
@@ -15,8 +15,8 @@ exports.getUserByUsername = (req, res) => {
     });
 };
 
-exports.getUsers = (req, res) => {
-  User.findAll({})
+exports.getGroups = (req, res) => {
+  Group.findAll({ include: User })
     .then(data => res.send(data))
     .catch(err => {
       console.error(err);
@@ -24,9 +24,9 @@ exports.getUsers = (req, res) => {
     });
 };
 
-exports.createUser = (req, res) => {
+exports.createGroup = (req, res) => {
   let user = req.body;
-  User.create(user)
+  Group.create(user)
     .then(data => {
       console.log(data);
       res.status(201).json({ message: 'success' });
