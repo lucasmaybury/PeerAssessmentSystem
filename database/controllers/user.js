@@ -1,4 +1,5 @@
 const { User } = require('../services/db');
+const helper = require('./helper');
 
 exports.getUserByUsername = (req, res) => {
   User.findByPk(req.params.username)
@@ -11,7 +12,7 @@ exports.getUserByUsername = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(err.status || 500).send(err.message);
+      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
     });
 };
 
@@ -20,7 +21,7 @@ exports.getUsers = (req, res) => {
     .then(data => res.send(data))
     .catch(err => {
       console.error(err);
-      res.status(err.status || 500).send(err.message);
+      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
     });
 };
 
@@ -33,6 +34,6 @@ exports.createUser = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(err.status || 500).send(err.message);
+      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
     });
 };

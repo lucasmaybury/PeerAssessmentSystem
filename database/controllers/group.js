@@ -1,4 +1,5 @@
 const { User, Group } = require('../services/db');
+const helper = require('./helper');
 
 exports.getGroupById = (req, res) => {
   Group.findByPk(req.params.username, { include: User })
@@ -11,7 +12,7 @@ exports.getGroupById = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(err.status || 500).send(err.message);
+      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
     });
 };
 
@@ -20,7 +21,7 @@ exports.getGroups = (req, res) => {
     .then(data => res.send(data))
     .catch(err => {
       console.error(err);
-      res.status(err.status || 500).send(err.message);
+      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
     });
 };
 
@@ -33,6 +34,6 @@ exports.createGroup = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(err.status || 500).send(err.message);
+      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
     });
 };
