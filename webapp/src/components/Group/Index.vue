@@ -33,7 +33,7 @@
         <tbody>
           <tr v-for="group in groups" :key="group.id">
             <td>{{ group.name }}</td>
-            <td>{{ group.members }}</td>
+            <td>{{ group.users.length }}</td>
             <td>{{ group.grade }}</td>
             <td>
               <b-link :to="`/group/${group.id}/view`">

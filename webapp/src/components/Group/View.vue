@@ -1,7 +1,11 @@
 <template>
   <b-card>
-    <p v-for="[key, value] of Object.entries(this.group)" :key="key">
-      {{ key }}: {{ value }}
+    <h3>{{ group.name }}</h3>
+    <br />
+    <p><b>Grade:</b> {{ group.grade || 'Not yet graded' }}</p>
+    <h5>Members:</h5>
+    <p v-for="member in group.users" :key="member.id">
+      {{ member.firstName }} {{ member.lastName }}
     </p>
   </b-card>
 </template>
