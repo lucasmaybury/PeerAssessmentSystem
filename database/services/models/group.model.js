@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     grade: {
-      type: DataTypes.INTEGER(),
+      type: DataTypes.DOUBLE,
       field: 'grade',
       allowNull: true,
     },
