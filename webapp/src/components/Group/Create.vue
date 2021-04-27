@@ -28,6 +28,7 @@ export default {
       blankGroup: {
         id: '',
         name: '',
+        grade: null,
       },
     };
   },

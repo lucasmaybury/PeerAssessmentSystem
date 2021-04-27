@@ -5,6 +5,8 @@ exports.getSQLErrorMessage = err => {
       return 'There is already a user with that username';
     case 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD':
       return 'Invalid data for one or more fields';
+    case 'WARN_DATA_TRUNCATED':
+      return 'Invalid data for one or more fields';
     default:
       return '';
   }

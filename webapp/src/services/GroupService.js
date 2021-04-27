@@ -11,6 +11,7 @@ export async function getAll() {
 export async function getById(data) {
   console.log('getting group');
   console.log(data);
+  if (!data['grade']) delete data['grade'];
   const response = await fetch(`/api/group/${data}`, {
     method: 'GET',
   }).then(helper.checkStatus);

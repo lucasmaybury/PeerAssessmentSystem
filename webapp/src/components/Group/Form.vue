@@ -19,7 +19,6 @@
         step="0.1"
         min="0.0"
         max="1000.0"
-        required
       />
     </b-form-group>
 
