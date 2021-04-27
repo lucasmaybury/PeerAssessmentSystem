@@ -4,22 +4,62 @@
       <b-form-input
         type="text"
         id="name-input"
-        v-model="values.name"
+        v-model="group.name"
         placeholder="Group Name"
         required
       />
     </b-form-group>
 
-    <b-form-group id="grade-group" label="Grade Name" label-for="grade-input">
+    <b-form-group id="grade-group" label="Grade" label-for="grade-input">
       <b-form-input
         type="number"
         id="grade-input"
-        v-model="values.grade"
+        v-model="group.grade"
         placeholder="Group Mark"
         step="0.1"
         min="0.0"
         max="1000.0"
       />
+    </b-form-group>
+
+    <b-form-group id="members-group" label="Members" label-for="members-input">
+      <b-table :items="group.users" :fields="fields" bordered small hover>
+        <template #cell(actions)="data">
+          <b-button
+            @click="removeFromMembers(data.item)"
+            variant="danger"
+            size="sm"
+            class="float-right"
+          >
+            Remove
+          </b-button>
+        </template>
+      </b-table>
+    </b-form-group>
+
+    <b-form-group
+      id="all-users-group"
+      label="All Students"
+      label-for="members-input"
+    >
+      <b-table
+        :items="filterUsers(allUsers)"
+        :fields="fields"
+        bordered
+        small
+        hover
+      >
+        <template #cell(actions)="data">
+          <b-button
+            @click="addToMembers(data.item)"
+            variant="primary"
+            size="sm"
+            class="float-right"
+          >
+            Add
+          </b-button>
+        </template>
+      </b-table>
     </b-form-group>
 
     <b-form-group id="buttons-group">
@@ -30,38 +70,59 @@
 </template>
 
 <script>
+const { getAll } = require('../../services/UserService');
+
 export default {
   name: 'GroupForm',
   props: {
-    defaultValues: Object,
+    defaultGroup: Object,
     confirmText: {
       type: String,
       required: true,
     },
   },
   watch: {
-    defaultValues: function(val) {
-      this.defaultValues = val;
+    defaultGroup: function() {
       this.reset();
     },
   },
   data() {
     return {
-      values: {
+      fields: [
+        { key: 'id', label: 'Username' },
+        'firstName',
+        'lastName',
+        { key: 'actions', label: '' },
+      ],
+      group: {
         id: '',
         name: '',
         grade: null,
+        users: [],
       },
+      allUsers: [],
     };
   },
   methods: {
     async confirm() {
-      this.$emit('confirm', this.values);
+      this.$emit('confirm', this.group);
+    },
+    async fetchUsers() {},
+    filterUsers(users) {
+      let ids = this.group.users?.map(user => user.id) ?? [];
+      return users.filter(user => !ids.includes(user.id));
+    },
+    async removeFromMembers(userToRemove) {
+      this.group.users = this.group.users.filter(
+        user => user.id !== userToRemove.id
+      );
+    },
+    async addToMembers(userToAdd) {
+      this.group.users.push(JSON.parse(JSON.stringify(userToAdd)));
     },
     reset() {
-      this.values.id = this.defaultValues.id;
-      this.values.name = this.defaultValues.name;
-      this.values.grade = this.defaultValues.grade;
+      this.group = JSON.parse(JSON.stringify(this.defaultGroup));
+      getAll().then(users => (this.allUsers = users));
     },
   },
   mounted() {

@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Group, User } = require('../services/db');
 const helper = require('./helper');
 
@@ -39,11 +40,17 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   let group = req.body;
-  Group.findByPk(group['id'])
+  let ids = group['users'].map(user => user.id);
+  let newUsers = await User.findAll({ where: { id: { [Op.in]: ids } } });
+  console.log(newUsers);
+  Group.findByPk(group['id'], { include: [{ model: User }] })
     .then(groupActual => {
-      groupActual.name = group['name'];
-      groupActual.grade = group['grade'];
+      groupActual.update({
+        name: group['name'],
+        grade: group['grade'],
+      });
       groupActual.save();
+      groupActual.setUsers(newUsers);
     })
     .then(() => res.status(201).json({ message: 'updated' }))
     .catch(err => {

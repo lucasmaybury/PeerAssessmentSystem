@@ -5,7 +5,7 @@
         <h2>Create Group</h2>
         <group-form
           @confirm="createGroup"
-          :defaultValues="blankGroup"
+          :defaultGroup="blankGroup"
           confirmText="Create"
           ref="form"
         />

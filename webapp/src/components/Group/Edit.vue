@@ -5,7 +5,7 @@
         <h2>Edit Group</h2>
         <group-form
           @confirm="updateGroup"
-          :defaultValues="currentGroup"
+          :defaultGroup="currentGroup"
           confirmText="Update"
           ref="form"
           :readOnlyId="true"
@@ -43,9 +43,7 @@ export default {
     },
     getGroup() {
       return getById(this.$route.params.id)
-        .then(group => {
-          this.currentGroup = group;
-        })
+        .then(group => (this.currentGroup = group))
         .catch(err => alert(err.message));
     },
   },
