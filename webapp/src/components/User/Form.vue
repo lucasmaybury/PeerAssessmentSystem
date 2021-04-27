@@ -1,5 +1,5 @@
 <template>
-  <b-form @submit.prevent="confirm()" @reset="reset()">
+  <b-form @submit.prevent="confirm()" @reset.prevent="reset()">
     <b-form-group
       id="username-group"
       label="Username"
@@ -54,8 +54,8 @@
     </b-form-group>
 
     <b-form-group id="buttons-group">
-      <b-button type="submit" variant="primary"> {{ confirmText }} </b-button>
-      <b-button type="reset" variant="danger"> Reset </b-button>
+      <b-button type="submit" variant="primary">{{ confirmText }}</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
     </b-form-group>
   </b-form>
 </template>
@@ -73,12 +73,18 @@ export default {
   },
   watch: {
     defaultValues: function(val) {
-      this.values = val;
+      this.defaultValues = val;
+      this.reset();
     },
   },
   data() {
     return {
-      values: {},
+      values: {
+        id: '',
+        firstName: '',
+        lastName: '',
+        role: null,
+      },
     };
   },
   methods: {
@@ -86,7 +92,10 @@ export default {
       this.$emit('confirm', this.values);
     },
     reset() {
-      this.values = this.defaultValues;
+      this.values.id = this.defaultValues.id;
+      this.values.firstName = this.defaultValues.firstName;
+      this.values.lastName = this.defaultValues.lastName;
+      this.values.role = this.defaultValues.role;
     },
   },
   mounted() {

@@ -37,10 +37,13 @@ export default {
     async createUser(user) {
       console.log('creating user:');
       console.log(user);
-      await userService.createUser(user).then(() => {
-        this.$router.push('/user');
-        alert('user created');
-      });
+      userService
+        .createUser(user)
+        .then(() => {
+          this.$router.push('/user');
+          alert('user created');
+        })
+        .catch(err => alert(err.message));
     },
   },
 };

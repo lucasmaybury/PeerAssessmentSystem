@@ -14,13 +14,13 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/user/{username}": {
+    "/user/{id}": {
       "get": {
         "tags": [],
         "description": "",
         "parameters": [
           {
-            "name": "username",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
@@ -59,15 +59,25 @@
             "description": "Created"
           }
         }
+      },
+      "delete": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
       }
     },
-    "/group/{username}": {
+    "/group/{id}": {
       "get": {
         "tags": [],
         "description": "",
         "parameters": [
           {
-            "name": "username",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"

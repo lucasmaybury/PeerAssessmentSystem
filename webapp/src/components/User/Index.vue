@@ -71,7 +71,7 @@ export default {
     };
   },
   methods: {
-    getUsers() {
+    fetchUsers() {
       getUsers().then(response => {
         this.users = response;
       });
@@ -81,13 +81,16 @@ export default {
       this.$bvModal.show('modalDelete');
     },
     async confirmDelete() {
-      await deleteUser(this.userToDelete);
-      this.$bvModal.hide('modalDelete');
-      this.getUsers();
+      deleteUser(this.userToDelete)
+        .then(() => {
+          this.$bvModal.hide('modalDelete');
+          this.fetchUsers();
+        })
+        .catch(err => alert(err.message));
     },
   },
   mounted() {
-    this.getUsers();
+    this.fetchUsers();
   },
 };
 </script>

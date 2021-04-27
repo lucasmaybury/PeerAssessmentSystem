@@ -33,22 +33,26 @@ export default {
     async updateUser(user) {
       console.log('updating user:');
       console.log(user);
-      let response = await userService.updateUser(user);
-      console.log(response);
-      if (response.ok) {
-        alert('user updated');
-        this.$refs.form.reset();
-      } else {
-        console.error(response['message']);
-        alert(response['message']);
-      }
+      userService
+        .updateUser(user)
+        .then(() => this.getUser())
+        .then(() => {
+          alert('user updated');
+          this.$refs['form'].reset();
+        })
+        .catch(err => alert(err.message));
+    },
+    getUser() {
+      return userService
+        .getUserByUsername(this.$route.params.id)
+        .then(user => {
+          this.currentUser = user;
+        })
+        .catch(err => alert(err.message));
     },
   },
-  async mounted() {
-    this.currentUser = await userService.getUserByUsername(
-      this.$route.params.id
-    );
-    // .then(user => (this.currentUser = user));
+  mounted() {
+    this.getUser();
   },
 };
 </script>
