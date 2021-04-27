@@ -7,19 +7,18 @@
 </template>
 
 <script>
-const userService = require('../../services/UserService');
+const { getById } = require('../../services/UserService');
 
 export default {
   name: 'ViewUser',
   data() {
     return {
       user: {},
-      values: [],
     };
   },
   methods: {
     async getUser() {
-      userService.getUserByUsername(this.$route.params.id).then(user => {
+      getById(this.$route.params.id).then(user => {
         this.user = user;
       });
     },

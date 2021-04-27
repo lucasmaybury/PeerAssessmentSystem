@@ -1,9 +1,9 @@
 <template>
   <b-container>
-    <b-modal ref="modal" id="modalDelete" title="Delete User?">
+    <b-modal ref="modal" id="modalDelete" title="Delete Group?">
       <p>
-        Are you sure you want to delete {{ userToDelete.firstName }}
-        {{ userToDelete.lastName }}?
+        Are you sure you want to delete {{ groupToDelete.firstName }}
+        {{ groupToDelete.lastName }}?
       </p>
       <div slot="modal-footer">
         <b-button variant="danger" @click="confirmDelete()" class="mr-2">
@@ -16,39 +16,37 @@
     </b-modal>
 
     <b-row class="m-1">
-      <h3>Users</h3>
-      <b-button to="/user/new" class="ml-auto">Add New</b-button>
+      <h3>Groups</h3>
+      <b-button to="/group/new" class="ml-auto">Add New</b-button>
     </b-row>
 
     <b-row class="m-1">
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Username</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Role</th>
+            <th>Group Name</th>
+            <th>Members</th>
+            <th>Grade</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td>{{ user.id }}</td>
-            <td>{{ user.firstName }}</td>
-            <td>{{ user.lastName }}</td>
-            <td>{{ user.role }}</td>
+          <tr v-for="group in groups" :key="group.id">
+            <td>{{ group.name }}</td>
+            <td>{{ group.members }}</td>
+            <td>{{ group.grade }}</td>
             <td>
-              <b-link :to="`/user/${user.id}/view`">
+              <b-link :to="`/group/${group.id}/view`">
                 <b-icon icon="file-text" variant="dark" />
               </b-link>
 
-              <b-link :to="`/user/${user.id}/edit`">
+              <b-link :to="`/group/${group.id}/edit`">
                 <b-icon icon="pencil-square" variant="dark" />
               </b-link>
 
               <b-icon
                 icon="trash"
-                @click="showDeleteModal(user)"
+                @click="showDeleteModal(group)"
                 variant="dark"
               />
             </td>
@@ -60,37 +58,37 @@
 </template>
 
 <script>
-import { getAll, deleteRecord } from '../../services/UserService';
+import { getAll, deleteRecord } from '../../services/GroupService';
 
 export default {
-  name: 'Users',
+  name: 'Groups',
   data: () => {
     return {
-      users: [],
-      userToDelete: {},
+      groups: [],
+      groupToDelete: {},
     };
   },
   methods: {
-    fetchUsers() {
+    fetchGroups() {
       getAll().then(response => {
-        this.users = response;
+        this.groups = response;
       });
     },
-    showDeleteModal(user) {
-      this.userToDelete = user;
+    showDeleteModal(group) {
+      this.groupToDelete = group;
       this.$bvModal.show('modalDelete');
     },
     async confirmDelete() {
-      deleteRecord(this.userToDelete)
+      deleteRecord(this.groupToDelete)
         .then(() => {
           this.$bvModal.hide('modalDelete');
-          this.fetchUsers();
+          this.fetchGroups();
         })
         .catch(err => alert(err.message));
     },
   },
   mounted() {
-    this.fetchUsers();
+    this.fetchGroups();
   },
 };
 </script>

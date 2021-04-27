@@ -2,10 +2,10 @@
   <div class="container">
     <b-row>
       <b-col>
-        <h2>Edit User</h2>
-        <user-form
-          @confirm="updateUser"
-          :defaultValues="currentUser"
+        <h2>Edit Group</h2>
+        <group-form
+          @confirm="updateGroup"
+          :defaultValues="currentGroup"
           confirmText="Update"
           ref="form"
           :readOnlyId="true"
@@ -17,40 +17,40 @@
 
 <script>
 import Form from './Form.vue';
-const { update, getById } = require('../../services/UserService');
+const { update, getById } = require('../../services/GroupService');
 
 export default {
-  name: 'EditUser',
+  name: 'EditGroup',
   components: {
-    UserForm: Form,
+    GroupForm: Form,
   },
   data() {
     return {
-      currentUser: {},
+      currentGroup: {},
     };
   },
   methods: {
-    async updateUser(user) {
-      console.log('updating user:');
-      console.log(user);
-      update(user)
-        .then(() => this.getUser())
+    async updateGroup(group) {
+      console.log('updating group:');
+      console.log(group);
+      update(group)
+        .then(() => this.getGroup())
         .then(() => {
-          alert('user updated');
+          alert('group updated');
           this.$refs['form'].reset();
         })
         .catch(err => alert(err.message));
     },
-    getUser() {
+    getGroup() {
       return getById(this.$route.params.id)
-        .then(user => {
-          this.currentUser = user;
+        .then(group => {
+          this.currentGroup = group;
         })
         .catch(err => alert(err.message));
     },
   },
   mounted() {
-    this.getUser();
+    this.getGroup();
   },
 };
 </script>

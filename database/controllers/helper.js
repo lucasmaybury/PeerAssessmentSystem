@@ -1,4 +1,5 @@
 exports.getSQLErrorMessage = err => {
+  if (!err) throw new Error('Unknown error');
   switch (err.code) {
     case 'ER_DUP_ENTRY':
       return 'There is already a user with that username';

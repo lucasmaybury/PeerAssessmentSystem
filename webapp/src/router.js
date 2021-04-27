@@ -11,6 +11,7 @@ export default new Router({
       name: 'Home',
       component: () => import('./components/Dashboard.vue'),
     },
+    /* User */
     {
       /* User Index */
       path: '/user',
@@ -34,6 +35,31 @@ export default new Router({
       path: '/user/:id/edit',
       name: 'Edit a student',
       component: () => import('./components/User/Edit.vue'),
+    },
+    /* Group */
+    {
+      /* Group Index */
+      path: '/group',
+      name: 'Group',
+      component: () => import('./components/Group/Index.vue'),
+    },
+    {
+      /* Group Create */
+      path: '/group/new',
+      name: 'Add new group',
+      component: () => import('./components/Group/Create.vue'),
+    },
+    {
+      /* Group View */
+      path: '/group/:id/view',
+      name: 'View a group',
+      component: () => import('./components/Group/View.vue'),
+    },
+    {
+      /* Group Edit */
+      path: '/group/:id/edit',
+      name: 'Edit a group',
+      component: () => import('./components/Group/Edit.vue'),
     },
   ],
 });

@@ -16,7 +16,7 @@
 
 <script>
 import Form from './Form.vue';
-const userService = require('../../services/UserService');
+const { create } = require('../../services/UserService');
 
 export default {
   name: 'CreateUser',
@@ -37,8 +37,7 @@ export default {
     async createUser(user) {
       console.log('creating user:');
       console.log(user);
-      userService
-        .createUser(user)
+      create(user)
         .then(() => {
           this.$router.push('/user');
           alert('user created');

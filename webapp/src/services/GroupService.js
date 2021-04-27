@@ -1,26 +1,26 @@
 const helper = require('./helper');
 
 export async function getAll() {
-  console.log('getting all users');
-  const response = await fetch('/api/user', {
+  console.log('getting all groups');
+  const response = await fetch('/api/group', {
     method: 'GET',
   }).then(helper.checkStatus);
   return response;
 }
 
 export async function getById(data) {
-  console.log('getting user');
+  console.log('getting group');
   console.log(data);
-  const response = await fetch(`/api/user/${data}`, {
+  const response = await fetch(`/api/group/${data}`, {
     method: 'GET',
   }).then(helper.checkStatus);
   return response;
 }
 
 export async function create(data) {
-  console.log('creating user');
+  console.log('creating group');
   console.log(data);
-  const response = await fetch('/api/user', {
+  const response = await fetch('/api/group', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -29,9 +29,9 @@ export async function create(data) {
 }
 
 export async function update(data) {
-  console.log('updating user');
+  console.log('updating group');
   console.log(data);
-  const response = await fetch('/api/user', {
+  const response = await fetch('/api/group', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -40,9 +40,9 @@ export async function update(data) {
 }
 
 export async function deleteRecord(data) {
-  console.log('deleting user');
+  console.log('deleting group');
   console.log(data);
-  const response = await fetch('/api/user', {
+  const response = await fetch('/api/group', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

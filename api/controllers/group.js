@@ -2,8 +2,8 @@ const fetch = require('node-fetch');
 const helper = require('./helper.js');
 
 exports.getById = (req, res) => {
-  console.log('getting user: ' + req.params.id);
-  fetch(`http://localhost:3081/user/${req.params.id}`, {
+  console.log('getting group: ' + req.params.id);
+  fetch(`http://localhost:3081/group/${req.params.id}`, {
     method: 'GET',
   })
     .then(helper.checkStatus)
@@ -12,8 +12,8 @@ exports.getById = (req, res) => {
 };
 
 exports.getAll = (req, res) => {
-  console.log('getting users');
-  fetch('http://localhost:3081/user', {
+  console.log('getting groups');
+  fetch('http://localhost:3081/group', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -23,9 +23,9 @@ exports.getAll = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  console.log('creating user:');
+  console.log('creating group:');
   console.log(req.body);
-  fetch('http://localhost:3081/user', {
+  fetch('http://localhost:3081/group', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -39,9 +39,9 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  console.log('updating user:');
+  console.log('updating group:');
   console.log(req.body);
-  fetch('http://localhost:3081/user', {
+  fetch('http://localhost:3081/group', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -55,9 +55,9 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-  console.log('deleting user:');
+  console.log('deleting group:');
   console.log(req.body);
-  fetch('http://localhost:3081/user', {
+  fetch('http://localhost:3081/group', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

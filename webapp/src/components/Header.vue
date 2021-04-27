@@ -10,6 +10,9 @@
         <b-nav-item>
           <b-link to="/user" router-tag="li">Users</b-link>
         </b-nav-item>
+        <b-nav-item>
+          <b-link to="/group" router-tag="li">Groups</b-link>
+        </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>

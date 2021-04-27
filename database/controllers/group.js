@@ -1,10 +1,10 @@
-const { User, Group } = require('../services/db');
+const { Group, User } = require('../services/db');
 const helper = require('./helper');
 
-exports.getGroupById = async (req, res) => {
-  Group.findByPk(req.params.username, { include: User })
+exports.getById = async (req, res) => {
+  Group.findByPk(req.params.id, { include: User })
     .then(data => {
-      if (data.length === 0) {
+      if (!data) {
         res.status(404).send('Not Found');
       } else {
         res.json(data);
@@ -16,7 +16,7 @@ exports.getGroupById = async (req, res) => {
     });
 };
 
-exports.getGroups = async (req, res) => {
+exports.getAll = async (req, res) => {
   Group.findAll({ include: User })
     .then(data => res.send(data))
     .catch(err => {
@@ -25,13 +25,38 @@ exports.getGroups = async (req, res) => {
     });
 };
 
-exports.createGroup = async (req, res) => {
-  let user = req.body;
-  Group.create(user)
+exports.create = async (req, res) => {
+  Group.create(req.body)
     .then(data => {
       console.log(data);
-      res.status(201).json({ message: 'success' });
+      res.status(201).json({ message: 'created' });
     })
+    .catch(err => {
+      console.error(err);
+      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
+    });
+};
+
+exports.update = async (req, res) => {
+  let group = req.body;
+  Group.findByPk(group['id'])
+    .then(groupActual => {
+      groupActual.name = group['name'];
+      groupActual.grade = group['grade'];
+      groupActual.save();
+    })
+    .then(() => res.status(201).json({ message: 'updated' }))
+    .catch(err => {
+      console.error(err);
+      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
+    });
+};
+
+exports.delete = async (req, res) => {
+  let group = req.body;
+  Group.findByPk(group['id'])
+    .then(groupActual => groupActual.destroy())
+    .then(() => res.status(201).json({ message: 'deleted' }))
     .catch(err => {
       console.error(err);
       res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
