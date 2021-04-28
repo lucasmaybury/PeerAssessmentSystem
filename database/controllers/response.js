@@ -1,15 +1,10 @@
 const { Op } = require('sequelize');
-const { Group, Assessment } = require('../services/db');
+const { User, Group, Assessment, Response } = require('../services/db');
 const helper = require('./helper');
 
 exports.getById = async (req, res) => {
-  Assessment.findByPk(req.params.id, {
-    include: [
-      {
-        association: Assessment.Group,
-        include: Group.User,
-      },
-    ],
+  Response.findByPk(req.params.id, {
+    include: [{ association: Response.User }, { association: Response.Recipient }, Assessment],
   })
     .then(data => {
       if (!data) {
@@ -25,13 +20,8 @@ exports.getById = async (req, res) => {
 };
 
 exports.getAll = async (req, res) => {
-  Assessment.findAll({
-    include: [
-      {
-        association: Assessment.Group,
-        include: Group.User,
-      },
-    ],
+  Response.findAll({
+    include: [{ association: Response.User }, { association: Response.Recipient }, Assessment],
   })
     .then(data => res.send(data))
     .catch(err => {
@@ -41,12 +31,11 @@ exports.getAll = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  let assessment = req.body;
-  let ids = assessment['groups'].map(group => group.id);
-  let newGroups = await Group.findAll({ where: { id: { [Op.in]: ids } } });
-  Assessment.create(req.body)
-    .then(assessmentActual => assessmentActual.setGroups(newGroups))
-    .then(res.status(201).json({ message: 'created' }))
+  Response.create(req.body)
+    .then(data => {
+      console.log(data);
+      res.status(201).json({ message: 'created' });
+    })
     .catch(err => {
       console.error(err);
       res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
@@ -54,12 +43,19 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  let assessment = req.body;
-  let ids = assessment['groups'].map(group => group.id);
-  let newGroups = await Group.findAll({ where: { id: { [Op.in]: ids } } });
-  Assessment.findByPk(assessment['id'])
-    .then(assessmentActual => assessmentActual.update({ name: assessment['name'] }))
-    .then(assessmentActual => assessmentActual.setGroups(newGroups))
+  let group = req.body;
+  let ids = group['users'].map(user => user.id);
+  let newUsers = await User.findAll({ where: { id: { [Op.in]: ids } } });
+  console.log(newUsers);
+  Response.findByPk(group['id'], { include: [{ model: User }] })
+    .then(groupActual => {
+      groupActual.update({
+        name: group['name'],
+        grade: group['grade'],
+      });
+      groupActual.save();
+      groupActual.setUsers(newUsers);
+    })
     .then(() => res.status(201).json({ message: 'updated' }))
     .catch(err => {
       console.error(err);
@@ -68,9 +64,9 @@ exports.update = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-  let assessment = req.body;
-  Assessment.findByPk(assessment['id'])
-    .then(assessmentActual => assessmentActual.destroy())
+  let group = req.body;
+  Group.findByPk(group['id'])
+    .then(groupActual => groupActual.destroy())
     .then(() => res.status(201).json({ message: 'deleted' }))
     .catch(err => {
       console.error(err);

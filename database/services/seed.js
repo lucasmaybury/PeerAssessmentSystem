@@ -1,4 +1,4 @@
-const { db, User, Group, Assessment } = require('./db');
+const { db, User, Group, Assessment, Response } = require('./db');
 
 exports.seed = () => {
   db.sequelize
@@ -45,20 +45,21 @@ exports.seed = () => {
       Assessment.bulkCreate(
         [
           {
+            id: 10,
             name: 'COM1234 Assignment',
             groups: [
               {
                 name: 'Group C',
                 users: [
-                  { id: '2435', firstName: 'Anne', lastName: 'McCaffrey', role: 1 },
-                  { id: '8324', firstName: 'George RR', lastName: 'Martin', role: 1 },
+                  { id: '1', firstName: 'Anne', lastName: 'McCaffrey', role: 1 },
+                  { id: '2', firstName: 'George RR', lastName: 'Martin', role: 1 },
                 ],
               },
               {
                 name: 'Group D',
                 users: [
-                  { id: '2225', firstName: 'Brandon', lastName: 'Sanderson', role: 1 },
-                  { id: '2176', firstName: 'Aldous', lastName: 'Huxley', role: 1 },
+                  { id: '3', firstName: 'Brandon', lastName: 'Sanderson', role: 1 },
+                  { id: '4', firstName: 'Aldous', lastName: 'Huxley', role: 1 },
                 ],
               },
             ],
@@ -73,5 +74,15 @@ exports.seed = () => {
           ],
         }
       ).catch(err => console.error(err))
+    )
+    .then(() =>
+      Response.bulkCreate([
+        {
+          userId: '1',
+          recipientId: '2',
+          assessmentId: 10,
+          score: 5,
+        },
+      ]).catch(err => console.error(err))
     );
 };

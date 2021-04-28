@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/user');
+const controller = require('../controllers/response');
 
-/* GET users listing. */
+/* GET group listing. */
 router.route('/:id').get(controller.getById);
 router
   .route('/')
