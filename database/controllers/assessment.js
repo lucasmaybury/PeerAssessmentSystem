@@ -41,11 +41,12 @@ exports.getAll = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
+  let assessment = req.body;
+  let ids = assessment['groups'].map(group => group.id);
+  let newGroups = await Group.findAll({ where: { id: { [Op.in]: ids } } });
   Assessment.create(req.body)
-    .then(data => {
-      console.log(data);
-      res.status(201).json({ message: 'created' });
-    })
+    .then(assessmentActual => assessmentActual.setGroups(newGroups))
+    .then(res.status(201).json({ message: 'created' }))
     .catch(err => {
       console.error(err);
       res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
@@ -56,7 +57,8 @@ exports.update = async (req, res) => {
   let assessment = req.body;
   let ids = assessment['groups'].map(group => group.id);
   let newGroups = await Group.findAll({ where: { id: { [Op.in]: ids } } });
-  Assessment.findByPk(assessment['id'], { include: Group })
+  Assessment.findByPk(assessment['id'])
+    .then(assessmentActual => assessmentActual.update({ name: assessment['name'] }))
     .then(assessmentActual => assessmentActual.setGroups(newGroups))
     .then(() => res.status(201).json({ message: 'updated' }))
     .catch(err => {

@@ -26,9 +26,8 @@ export default {
   data() {
     return {
       blankAssessment: {
-        id: '',
         name: '',
-        grade: null,
+        groups: [],
       },
     };
   },

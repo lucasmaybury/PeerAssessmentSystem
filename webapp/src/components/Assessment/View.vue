@@ -3,11 +3,14 @@
     <h3>{{ assessment.name }}</h3>
     <br />
     <h5>Groups:</h5>
-    <b-table
-      :items="assessment.groups"
-      :fields="['name', 'grade', 'actions']"
-      bordered
-    >
+    <b-table :items="assessment.groups" :fields="fields" bordered>
+      <template #cell(users)="group">
+        {{
+          group.item.users
+            .map(user => `${user.firstName} ${user.lastName}`)
+            .join(', ') || 'Empty'
+        }}
+      </template>
       <template #cell(actions)="data">
         <b-link :to="`/group/${data.item.id}/view`">
           <b-icon icon="file-text" variant="dark" />
@@ -29,6 +32,7 @@ export default {
   data() {
     return {
       assessment: {},
+      fields: ['name', 'grade', { key: 'users', label: 'Members' }, 'actions'],
     };
   },
   methods: {
