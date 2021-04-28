@@ -21,38 +21,30 @@
     </b-row>
 
     <b-row class="m-1">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Group Name</th>
-            <th>Members</th>
-            <th>Grade</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="group in groups" :key="group.id">
-            <td>{{ group.name }}</td>
-            <td>{{ group.users.length }}</td>
-            <td>{{ group.grade }}</td>
-            <td>
-              <b-link :to="`/group/${group.id}/view`">
-                <b-icon icon="file-text" variant="dark" />
-              </b-link>
+      <b-table :items="groups" :fields="fields" bordered small hover>
+        <template #cell(users)="group">
+          {{
+            group.item.users
+              .map(user => `${user.firstName} ${user.lastName}`)
+              .join(', ') || 'Empty'
+          }}
+        </template>
+        <template #cell(actions)="group">
+          <b-link :to="`/group/${group.item.id}/view`">
+            <b-icon icon="file-text" variant="dark" />
+          </b-link>
 
-              <b-link :to="`/group/${group.id}/edit`">
-                <b-icon icon="pencil-square" variant="dark" />
-              </b-link>
+          <b-link :to="`/group/${group.item.id}/edit`">
+            <b-icon icon="pencil-square" variant="dark" />
+          </b-link>
 
-              <b-icon
-                icon="trash"
-                @click="showDeleteModal(group)"
-                variant="dark"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <b-icon
+            icon="trash"
+            @click="showDeleteModal(group.item)"
+            variant="dark"
+          />
+        </template>
+      </b-table>
     </b-row>
   </b-container>
 </template>
@@ -65,6 +57,12 @@ export default {
   data: () => {
     return {
       groups: [],
+      fields: [
+        { key: 'name', label: 'Name' },
+        { key: 'users', label: 'Members' },
+        { key: 'grade', label: 'Grade' },
+        { key: 'actions', label: '' },
+      ],
       groupToDelete: {},
     };
   },

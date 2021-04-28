@@ -21,40 +21,23 @@
     </b-row>
 
     <b-row class="m-1">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td>{{ user.id }}</td>
-            <td>{{ user.firstName }}</td>
-            <td>{{ user.lastName }}</td>
-            <td>{{ user.role }}</td>
-            <td>
-              <b-link :to="`/user/${user.id}/view`">
-                <b-icon icon="file-text" variant="dark" />
-              </b-link>
+      <b-table :items="users" :fields="fields" bordered>
+        <template #cell(actions)="data">
+          <b-link :to="`/user/${data.item.id}/view`">
+            <b-icon icon="file-text" variant="dark" />
+          </b-link>
 
-              <b-link :to="`/user/${user.id}/edit`">
-                <b-icon icon="pencil-square" variant="dark" />
-              </b-link>
+          <b-link :to="`/user/${data.item.id}/edit`">
+            <b-icon icon="pencil-square" variant="dark" />
+          </b-link>
 
-              <b-icon
-                icon="trash"
-                @click="showDeleteModal(user)"
-                variant="dark"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <b-icon
+            icon="trash"
+            @click="showDeleteModal(data.item)"
+            variant="dark"
+          />
+        </template>
+      </b-table>
     </b-row>
   </b-container>
 </template>
@@ -67,6 +50,12 @@ export default {
   data: () => {
     return {
       users: [],
+      fields: [
+        { key: 'id', label: 'Username' },
+        { key: 'firstName' },
+        { key: 'lastName' },
+        { key: 'actions', label: '' },
+      ],
       userToDelete: {},
     };
   },
