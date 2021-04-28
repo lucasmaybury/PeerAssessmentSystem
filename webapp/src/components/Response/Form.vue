@@ -107,6 +107,7 @@ export default {
     async confirm() {
       this.$emit('confirm', this.group);
     },
+    async fetchUsers() {},
     filterUsers(users) {
       let ids = this.group.users?.map(user => user.id) ?? [];
       return users.filter(user => !ids.includes(user.id));

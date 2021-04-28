@@ -20,27 +20,7 @@ exports.seed = () => {
         { include: User }
       ).catch(err => console.error(err))
     )
-    .then(() =>
-      Group.bulkCreate(
-        [
-          {
-            name: 'Group 1',
-            users: [
-              { id: 'acc17lm', firstName: 'Lucas', lastName: 'Maybury', role: 1 },
-              { id: 'psy16fr', firstName: 'Fae', lastName: 'Rathmell', role: 1 },
-            ],
-          },
-          {
-            name: 'Team 2',
-            users: [
-              { id: 'got0p', firstName: 'Alfie', lastName: 'Allen', role: 1 },
-              { id: 'bob420', firstName: 'Bob', lastName: 'Marley', role: 1 },
-            ],
-          },
-        ],
-        { include: User }
-      ).catch(err => console.error(err))
-    )
+    .then(() => Group.bulkCreate([], { include: User }).catch(err => console.error(err)))
     .then(() =>
       Assessment.bulkCreate(
         [
@@ -53,11 +33,6 @@ exports.seed = () => {
                 users: [
                   { id: '1', firstName: 'Anne', lastName: 'McCaffrey', role: 1 },
                   { id: '2', firstName: 'George RR', lastName: 'Martin', role: 1 },
-                ],
-              },
-              {
-                name: 'Group D',
-                users: [
                   { id: '3', firstName: 'Brandon', lastName: 'Sanderson', role: 1 },
                   { id: '4', firstName: 'Aldous', lastName: 'Huxley', role: 1 },
                 ],

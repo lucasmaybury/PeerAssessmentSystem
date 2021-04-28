@@ -9,7 +9,6 @@ router
   .route('/')
   .get(group.getAll)
   .post(group.create)
-  .put(group.update)
   .delete(group.delete);
 
 module.exports = router;

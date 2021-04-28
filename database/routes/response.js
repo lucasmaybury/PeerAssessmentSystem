@@ -9,7 +9,6 @@ router
   .route('/')
   .get(controller.getAll)
   .post(controller.create)
-  .put(controller.update)
   .delete(controller.delete);
 
 module.exports = router;

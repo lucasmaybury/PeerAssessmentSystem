@@ -42,27 +42,6 @@ exports.create = async (req, res) => {
     });
 };
 
-exports.update = async (req, res) => {
-  let group = req.body;
-  let ids = group['users'].map(user => user.id);
-  let newUsers = await User.findAll({ where: { id: { [Op.in]: ids } } });
-  console.log(newUsers);
-  Response.findByPk(group['id'], { include: [{ model: User }] })
-    .then(groupActual => {
-      groupActual.update({
-        name: group['name'],
-        grade: group['grade'],
-      });
-      groupActual.save();
-      groupActual.setUsers(newUsers);
-    })
-    .then(() => res.status(201).json({ message: 'updated' }))
-    .catch(err => {
-      console.error(err);
-      res.status(err.status || 500).send(helper.getSQLErrorMessage(err.original));
-    });
-};
-
 exports.delete = async (req, res) => {
   let group = req.body;
   Group.findByPk(group['id'])

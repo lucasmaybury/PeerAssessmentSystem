@@ -38,22 +38,6 @@ exports.create = (req, res) => {
     .catch(err => res.status(err.status || 500).send(err.message));
 };
 
-exports.update = (req, res) => {
-  console.log('updating response:');
-  console.log(req.body);
-  fetch('http://localhost:3081/response', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'user-agent': 'localhost:3080',
-    },
-    body: JSON.stringify(req.body),
-  })
-    .then(helper.checkStatus)
-    .then(response => res.status(201).json({ message: response.message }))
-    .catch(err => res.status(err.status || 500).send(err.message));
-};
-
 exports.delete = (req, res) => {
   console.log('deleting response:');
   console.log(req.body);

@@ -11,6 +11,12 @@ export default new Router({
       name: 'Home',
       component: () => import('./components/Dashboard.vue'),
     },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('./components/Login.vue'),
+    },
+
     /* User */
     {
       /* User Index */
@@ -87,6 +93,32 @@ export default new Router({
       path: '/assessment/:id/edit',
       name: 'Edit a assessment',
       component: () => import('./components/Assessment/Edit.vue'),
+    },
+
+    /* Response */
+    {
+      /* Response Index */
+      path: '/response',
+      name: 'Response',
+      component: () => import('./components/Response/Index.vue'),
+    },
+    {
+      /* Response Create */
+      path: '/response/:id/new',
+      name: 'Add new response',
+      component: () => import('./components/Response/Create.vue'),
+    },
+    {
+      /* Response View */
+      path: '/response/:id/view',
+      name: 'View a response',
+      component: () => import('./components/Response/View.vue'),
+    },
+    {
+      /* Response: Choose group to review */
+      path: '/response/:id/',
+      name: 'Choose a group to review',
+      component: () => import('./components/Response/ChooseGroup.vue'),
     },
   ],
 });

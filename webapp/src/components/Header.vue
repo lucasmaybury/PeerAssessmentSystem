@@ -17,6 +17,13 @@
           <b-link to="/assessment" router-tag="li">Assessments</b-link>
         </b-nav-item>
       </b-navbar-nav>
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item>
+          <b-link to="/login">
+            <b-button>Assess Your Team</b-button>
+          </b-link>
+        </b-nav-item>
+      </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </template>
