@@ -19,8 +19,10 @@ db.sequelize = sequelize;
 
 let User = require('./models/user.model.js')(sequelize, Sequelize);
 let Group = require('./models/group.model.js')(sequelize, Sequelize);
+let Assessment = require('./models/assessment.model.js')(sequelize, Sequelize);
 
-User.belongsToMany(Group, {through: 'Membership'});
-Group.belongsToMany(User, {through: 'Membership'});
+User.Product = User.belongsToMany(Group, { through: 'Membership' });
+Group.User = Group.belongsToMany(User, { through: 'Membership' });
+Assessment.Group = Assessment.hasMany(Group);
 
-module.exports = { db, User, Group };
+module.exports = { db, User, Group, Assessment };

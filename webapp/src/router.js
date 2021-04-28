@@ -36,6 +36,7 @@ export default new Router({
       name: 'Edit a student',
       component: () => import('./components/User/Edit.vue'),
     },
+
     /* Group */
     {
       /* Group Index */
@@ -60,6 +61,32 @@ export default new Router({
       path: '/group/:id/edit',
       name: 'Edit a group',
       component: () => import('./components/Group/Edit.vue'),
+    },
+
+    /* Assessment */
+    {
+      /* Assessment Index */
+      path: '/assessment',
+      name: 'Assessment',
+      component: () => import('./components/Assessment/Index.vue'),
+    },
+    {
+      /* Assessment Create */
+      path: '/assessment/new',
+      name: 'Add new assessment',
+      component: () => import('./components/Assessment/Create.vue'),
+    },
+    {
+      /* Assessment View */
+      path: '/assessment/:id/view',
+      name: 'View a assessment',
+      component: () => import('./components/Assessment/View.vue'),
+    },
+    {
+      /* Assessment Edit */
+      path: '/assessment/:id/edit',
+      name: 'Edit a assessment',
+      component: () => import('./components/Assessment/Edit.vue'),
     },
   ],
 });

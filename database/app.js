@@ -23,6 +23,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use('/user', require('./routes/user'));
 app.use('/group', require('./routes/group'));
+app.use('/assessment', require('./routes/assessment'));
 
 const { db } = require('./services/db');
 db.sequelize.sync({ force: true }).then(() => {
