@@ -34,7 +34,11 @@
             <b-icon icon="pencil-square" variant="dark" />
           </b-link>
 
-          <b-icon icon="trash" @click="showDeleteModal(data)" variant="dark" />
+          <b-icon
+            icon="trash"
+            @click="showDeleteModal(data.item)"
+            variant="dark"
+          />
         </template>
       </b-table>
     </b-row>
