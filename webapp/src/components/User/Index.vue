@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-modal ref="modal" id="modalDelete" title="Delete User?">
+    <b-modal ref="modal" id="modalDelete" title="Delete Student?">
       <p>
         Are you sure you want to delete {{ userToDelete.firstName }}
         {{ userToDelete.lastName }}?
@@ -16,7 +16,7 @@
     </b-modal>
 
     <b-row class="m-1">
-      <h3>Users</h3>
+      <h3>Students</h3>
       <b-button to="/user/new" class="ml-auto">Add New</b-button>
     </b-row>
 
@@ -25,8 +25,8 @@
         <thead>
           <tr>
             <th>Username</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Role</th>
             <th>Actions</th>
           </tr>
