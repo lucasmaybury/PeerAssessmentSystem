@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const group = require('../controllers/group');
+const controller = require('../controllers/group');
 
 /* GET group listing. */
-router.route('/:id').get(group.getById);
+router.route('/:id').get(controller.getById);
 router
   .route('/')
-  .get(group.getAll)
-  .post(group.create)
-  .put(group.update)
-  .delete(group.delete);
+  .get(controller.getAll)
+  .post(controller.create)
+  .put(controller.update)
+  .delete(controller.delete);
 
 module.exports = router;
