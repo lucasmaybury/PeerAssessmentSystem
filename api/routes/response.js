@@ -8,7 +8,7 @@ router.route('/:id').get(group.getById);
 router
   .route('/')
   .get(group.getAll)
-  .post(group.create)
+  .post(group.respond)
   .delete(group.delete);
 
 module.exports = router;

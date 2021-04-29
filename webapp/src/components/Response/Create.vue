@@ -1,34 +1,34 @@
 <template>
-  <div class="container">
+  <b-container>
     <b-row>
       <b-col>
-        <h2>{{ group.assessment }}</h2>
-        <h2>Give feedback on your group</h2>
-        <b-form @submit.prevent="confirm()" @reset.prevent="reset()">
+        <br />
+        <h2>{{ group.assessment.name }}</h2>
+        <h3>Give feedback on your group: {{ group.name }}</h3>
+        <br />
+        <b-form
+          @submit.prevent="confirm()"
+          @reset.prevent="reset()"
+          v-if="ready"
+        >
           <b-form-group
-            id="name-group"
-            label="Group Name"
-            label-for="name-input"
+            v-for="(user, index) in group.users"
+            :key="user.id"
+            :id="`score-${user.id}-group`"
+            :label="`Rating for ${user.firstName} ${user.lastName}`"
+            :label-for="`score-${user.id}-input`"
+            label-cols-sm="3"
           >
             <b-form-input
-              type="num"
-              id="name-input"
-              v-model="group.name"
-              placeholder="Group Name"
+              type="number"
+              :id="`score-${user.id}-input`"
+              v-model="scores[index].score"
+              placeholder="Group Mark"
+              step="1"
+              min="0"
               required
             />
-          </b-form-group>
-
-          <b-form-group id="grade-group" label="Grade" label-for="grade-input">
-            <b-form-input
-              type="number"
-              id="grade-input"
-              v-model="group.grade"
-              placeholder="Group Mark"
-              step="0.1"
-              min="0.0"
-              max="1000.0"
-            />
+            <br />
           </b-form-group>
 
           <b-form-group id="buttons-group">
@@ -38,29 +38,49 @@
         </b-form>
       </b-col>
     </b-row>
-  </div>
+  </b-container>
 </template>
 
 <script>
 const groupService = require('../../services/GroupService');
+const responseService = require('../../services/ResponseService');
 
 export default {
   name: 'CreateResponse',
   data() {
     return {
       group: {},
-      blankResponse: {
-        id: '',
-        name: '',
-        grade: null,
-      },
+      scores: [],
+      ready: false,
     };
   },
-  methods: {},
-  mounted() {
+  methods: {
+    confirm() {
+      let data = {
+        userId: localStorage.getItem('userId'),
+        groupId: this.group.id,
+        scores: this.scores,
+      };
+      responseService
+        .create(data)
+        .then(() => {
+          alert('response recorded');
+          this.$router.push('/');
+        })
+        .catch(err => alert(err.message));
+    },
+  },
+  created() {
     groupService
       .getById(this.$route.params.id)
-      .then(group => (this.group = group));
+      .then(group => (this.group = group))
+      .catch(() => alert("couldn't fetch group"))
+      .then(() => {
+        this.scores = this.group.users.map(user => {
+          return { recipientId: user.id, score: null };
+        });
+        this.ready = true;
+      });
   },
 };
 </script>

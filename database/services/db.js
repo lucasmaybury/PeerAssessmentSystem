@@ -35,8 +35,8 @@ User.Response = User.hasMany(Response);
 Response.User = Response.belongsTo(User, { as: 'user', foreignKey: 'userId' });
 Response.Recipient = Response.belongsTo(User, { as: 'recipient', foreignKey: 'recipientId' });
 
-// Assessments have many Responses
-Assessment.Response = Assessment.hasMany(Response);
-Response.Assessment = Response.belongsTo(Assessment);
+// Groups have many Responses
+Group.Response = Group.hasMany(Response);
+Response.Group = Response.belongsTo(Group);
 
 module.exports = { db, User, Group, Assessment, Response };

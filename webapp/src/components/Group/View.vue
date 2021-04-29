@@ -7,6 +7,9 @@
     <p v-for="member in group.users" :key="member.id">
       {{ member.firstName }} {{ member.lastName }}
     </p>
+    <br />
+    <h5>Scores Given</h5>
+    <b-table :items="group.responses" :fields="responseFields"> </b-table>
   </b-card>
 </template>
 
@@ -18,6 +21,11 @@ export default {
   data() {
     return {
       group: {},
+      responseFields: [
+        { key: 'userId' },
+        { key: 'recipientId' },
+        { key: 'score' },
+      ],
     };
   },
   methods: {

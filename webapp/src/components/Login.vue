@@ -46,7 +46,7 @@ export default {
         users.map(user => user.id)
       );
       if (allUsernames.includes(this.loginUsername)) {
-        this.loggedIn = true;
+        localStorage.userId = this.loginUsername;
         await this.$router.push(`/response/${this.loginUsername}`);
       } else {
         alert('invalid username');

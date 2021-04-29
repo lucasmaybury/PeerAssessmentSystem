@@ -1,9 +1,9 @@
 const { Op } = require('sequelize');
-const { Group, User, Assessment } = require('../services/db');
+const { Group, User, Assessment, Response } = require('../services/db');
 const helper = require('./helper');
 
 exports.getById = async (req, res) => {
-  Group.findByPk(req.params.id, { include: User, Assessment })
+  Group.findByPk(req.params.id, { include: [User, Assessment, Response] })
     .then(data => {
       if (!data) {
         res.status(404).send('Not Found');
@@ -18,7 +18,7 @@ exports.getById = async (req, res) => {
 };
 
 exports.getAll = async (req, res) => {
-  Group.findAll({ include: User, Assessment })
+  Group.findAll({ include: [User, Assessment] })
     .then(data => res.send(data))
     .catch(err => {
       console.error(err);

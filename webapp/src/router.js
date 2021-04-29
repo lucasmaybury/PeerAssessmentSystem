@@ -97,12 +97,6 @@ export default new Router({
 
     /* Response */
     {
-      /* Response Index */
-      path: '/response',
-      name: 'Response',
-      component: () => import('./components/Response/Index.vue'),
-    },
-    {
       /* Response Create */
       path: '/response/:id/new',
       name: 'Add new response',

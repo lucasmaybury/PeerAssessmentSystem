@@ -4,7 +4,11 @@ const helper = require('./helper');
 
 exports.getById = async (req, res) => {
   Response.findByPk(req.params.id, {
-    include: [{ association: Response.User }, { association: Response.Recipient }, Assessment],
+    include: [
+      { association: Response.User },
+      { association: Response.Recipient },
+      { model: Group, include: [Assessment] },
+    ],
   })
     .then(data => {
       if (!data) {
@@ -21,7 +25,11 @@ exports.getById = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   Response.findAll({
-    include: [{ association: Response.User }, { association: Response.Recipient }, Assessment],
+    include: [
+      { association: Response.User },
+      { association: Response.Recipient },
+      { model: Group, include: [Assessment] },
+    ],
   })
     .then(data => res.send(data))
     .catch(err => {
