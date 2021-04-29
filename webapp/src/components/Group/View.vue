@@ -9,7 +9,14 @@
     </p>
     <br />
     <h5>Scores Given</h5>
-    <b-table :items="scoreTable" :fields="responseFields">
+    <b-table
+      :items="scoreTable"
+      :fields="responseFields"
+      thead-class="table-secondary"
+      bordered
+      small
+      fixed
+    >
       <template #cell(user)="data">
         <b>{{ group.users[data.index].firstName }}</b>
       </template>
@@ -25,7 +32,7 @@ export default {
   data() {
     return {
       group: {},
-      responseFields: [{ key: 'user', label: 'from/to' }],
+      responseFields: [{ key: 'user', label: 'from/to', variant: 'secondary' }],
       scoreTable: [],
       userIndex: {},
     };
