@@ -9,8 +9,7 @@ export async function getAll() {
 }
 
 export async function getById(data) {
-  console.log('getting assessment');
-  console.log(data);
+  console.log('getting assessment', data);
   if (!data['grade']) delete data['grade'];
   const response = await fetch(`/api/assessment/${data}`, {
     method: 'GET',
@@ -19,8 +18,7 @@ export async function getById(data) {
 }
 
 export async function create(data) {
-  console.log('creating assessment');
-  console.log(data);
+  console.log('creating assessment', data);
   const response = await fetch('/api/assessment', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -30,8 +28,7 @@ export async function create(data) {
 }
 
 export async function update(data) {
-  console.log('updating assessment');
-  console.log(data);
+  console.log('updating assessment', data);
   const response = await fetch('/api/assessment', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -41,8 +38,7 @@ export async function update(data) {
 }
 
 export async function deleteRecord(data) {
-  console.log('deleting assessment');
-  console.log(data);
+  console.log('deleting assessment', data);
   const response = await fetch('/api/assessment', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },

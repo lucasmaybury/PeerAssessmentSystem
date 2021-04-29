@@ -31,8 +31,6 @@ export default {
   },
   methods: {
     async updateUser(user) {
-      console.log('updating user:');
-      console.log(user);
       update(user)
         .then(() => this.getUser())
         .then(() => {

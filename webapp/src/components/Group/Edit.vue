@@ -31,8 +31,6 @@ export default {
   },
   methods: {
     async updateGroup(group) {
-      console.log('updating group:');
-      console.log(group);
       update(group)
         .then(() => this.getGroup())
         .then(() => {

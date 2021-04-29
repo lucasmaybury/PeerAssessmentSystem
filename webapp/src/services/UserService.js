@@ -9,8 +9,7 @@ export async function getAll() {
 }
 
 export async function getById(data) {
-  console.log('getting user');
-  console.log(data);
+  console.log('getting user', data);
   const response = await fetch(`/api/user/${data}`, {
     method: 'GET',
   }).then(helper.checkStatus);
@@ -18,8 +17,7 @@ export async function getById(data) {
 }
 
 export async function create(data) {
-  console.log('creating user');
-  console.log(data);
+  console.log('creating user', data);
   const response = await fetch('/api/user', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -29,8 +27,7 @@ export async function create(data) {
 }
 
 export async function update(data) {
-  console.log('updating user');
-  console.log(data);
+  console.log('updating user', data);
   const response = await fetch('/api/user', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -40,8 +37,7 @@ export async function update(data) {
 }
 
 export async function deleteRecord(data) {
-  console.log('deleting user');
-  console.log(data);
+  console.log('deleting user', data);
   const response = await fetch('/api/user', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },

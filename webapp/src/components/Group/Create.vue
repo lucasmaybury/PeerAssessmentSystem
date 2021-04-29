@@ -34,8 +34,6 @@ export default {
   },
   methods: {
     async createGroup(group) {
-      console.log('creating group:');
-      console.log(group);
       create(group)
         .then(() => {
           this.$router.push('/group');

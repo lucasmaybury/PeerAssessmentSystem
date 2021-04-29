@@ -35,8 +35,6 @@ export default {
   },
   methods: {
     async createUser(user) {
-      console.log('creating user:');
-      console.log(user);
       create(user)
         .then(() => {
           this.$router.push('/user');
