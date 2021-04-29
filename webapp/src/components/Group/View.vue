@@ -9,7 +9,11 @@
     </p>
     <br />
     <h5>Scores Given</h5>
-    <b-table :items="group.responses" :fields="responseFields"> </b-table>
+    <b-table :items="scoreTable" :fields="responseFields">
+      <template #cell(user)="data">
+        <b>{{ group.users[data.index].firstName }}</b>
+      </template>
+    </b-table>
   </b-card>
 </template>
 
@@ -21,22 +25,32 @@ export default {
   data() {
     return {
       group: {},
-      responseFields: [
-        { key: 'userId' },
-        { key: 'recipientId' },
-        { key: 'score' },
-      ],
+      responseFields: [{ key: 'user', label: 'from/to' }],
+      scoreTable: [],
+      userIndex: {},
     };
   },
   methods: {
-    async getGroup() {
-      getById(this.$route.params.id).then(group => {
-        this.group = group;
+    async setup() {
+      this.group = await getById(this.$route.params.id);
+      this.group.users.forEach((user, index) => {
+        this.userIndex[user.id] = index;
+      });
+      this.group.users.forEach(user => {
+        this.scoreTable.push({});
+        this.responseFields.push({
+          key: user.id,
+          label: `${user.firstName}`,
+        });
+      });
+      this.group.responses.forEach(response => {
+        this.scoreTable[this.userIndex[response.userId]][response.recipientId] =
+          response.score;
       });
     },
   },
   mounted() {
-    this.getGroup();
+    this.setup();
   },
 };
 </script>
