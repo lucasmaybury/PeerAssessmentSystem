@@ -31,7 +31,7 @@
       bordered
       small
       fixed
-      foot-clone="true"
+      foot-clone
     >
       <template #cell()="data">
         <span>
@@ -52,12 +52,15 @@
         <b>{{ group.users[data.index].firstName }}</b>
       </template>
       <template #foot()="data">
-        <p>{{ totals[data.field.key] }}</p>
-        <p>
-          {{ Math.round(totals[data.field.key] * group.grade * 100) / 100 }}
-        </p>
+        <p v-if="!responesComplete">-</p>
+        <span v-else>
+          <p>{{ totals[data.field.key] }}</p>
+          <p>
+            {{ Math.round(totals[data.field.key] * group.grade * 100) / 100 }}
+          </p>
+        </span>
       </template>
-      <template #foot(user)>
+      <template #foot(user)="">
         <p>Final Weighting</p>
         <p>Weighted Grade</p>
       </template>
@@ -122,16 +125,26 @@ export default {
         row.total = total;
       });
       this.totals = {};
-      this.group.users.forEach(user => {
-        this.totals[user.id] =
-          Math.round(
-            (Object.values(this.scoreTable)
-              .map(row => row[user.id].normalised)
-              .reduce((total, num) => total + num, 0) /
-              this.group.users.length) *
-              1000
-          ) / 1000;
-      });
+      if (this.responesComplete) {
+        this.group.users.forEach(user => {
+          this.totals[user.id] =
+            Math.round(
+              (Object.values(this.scoreTable)
+                .map(row => row[user.id].normalised)
+                .reduce((total, num) => total + num, 0) /
+                this.group.users.length) *
+                1000
+            ) / 1000;
+        });
+      }
+    },
+  },
+  computed: {
+    responesComplete() {
+      return (
+        this.group.responses.length ===
+        this.group.users.length * this.group.users.length
+      );
     },
   },
   mounted() {
