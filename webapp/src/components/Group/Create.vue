@@ -29,6 +29,7 @@ export default {
         id: '',
         name: '',
         grade: null,
+        users: [],
       },
     };
   },

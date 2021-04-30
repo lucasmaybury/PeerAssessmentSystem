@@ -26,8 +26,17 @@ exports.getAll = async (req, res) => {
     });
 };
 
+async function getUserModels(group) {
+  let ids = group['users'].map(user => user.id);
+  let newUsers = await User.findAll({ where: { id: { [Op.in]: ids } } });
+  return newUsers;
+}
+
 exports.create = async (req, res) => {
+  let users = await getUserModels(req.body);
+  if (!req.body.grade) delete req.body.grade;
   Group.create(req.body)
+    .then(groupActual => groupActual.setUsers(users))
     .then(data => {
       console.log(data);
       res.status(201).json({ message: 'created' });
@@ -39,9 +48,8 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  let group = req.body;
-  let ids = group['users'].map(user => user.id);
-  let newUsers = await User.findAll({ where: { id: { [Op.in]: ids } } });
+  let group = req.body.group;
+  let newUsers = await getUserModels(req.body);
   console.log(newUsers);
   Group.findByPk(group['id'], { include: [{ model: User }] })
     .then(groupActual => {
