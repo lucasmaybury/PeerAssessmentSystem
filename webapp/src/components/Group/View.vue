@@ -31,6 +31,7 @@
       bordered
       small
       fixed
+      foot-clone="true"
     >
       <template #cell()="data">
         <span>
@@ -50,7 +51,18 @@
       <template #cell(user)="data">
         <b>{{ group.users[data.index].firstName }}</b>
       </template>
+      <template #foot()="data">
+        <p>{{ totals[data.field.key] }}</p>
+        <p>
+          {{ Math.round(totals[data.field.key] * group.grade * 100) / 100 }}
+        </p>
+      </template>
+      <template #foot(user)>
+        <p>Final Weighting</p>
+        <p>Weighted Grade</p>
+      </template>
     </b-table>
+
     <br />
     <p v-if="percentageView">
       Shown are scores as a percentage of the sum of all scores given,
@@ -79,6 +91,7 @@ export default {
       scoreTable: [],
       userIndex: {},
       percentageView: false,
+      totals: {},
     };
   },
   methods: {
@@ -108,6 +121,17 @@ export default {
         });
         row.total = total;
       });
+      this.totals = {};
+      this.group.users.forEach(user => {
+        this.totals[user.id] =
+          Math.round(
+            (Object.values(this.scoreTable)
+              .map(row => row[user.id].normalised)
+              .reduce((total, num) => total + num, 0) /
+              this.group.users.length) *
+              1000
+          ) / 1000;
+      });
     },
   },
   mounted() {
@@ -115,3 +139,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.hidden_header {
+  display: none;
+}
+</style>
