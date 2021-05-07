@@ -48,7 +48,7 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  let group = req.body.group;
+  let group = req.body;
   let newUsers = await getUserModels(req.body);
   console.log(newUsers);
   Group.findByPk(group['id'], { include: [{ model: User }] })
