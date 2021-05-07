@@ -142,7 +142,7 @@ export default {
   computed: {
     responesComplete() {
       return (
-        this.group.responses.length ===
+        this.group.responses.length >=
         this.group.users.length * this.group.users.length
       );
     },
