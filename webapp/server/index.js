@@ -3,7 +3,7 @@ const fs = require('fs');
 const app = express();
 const port = 8080;
 
-let html = fs.readFileSync('dist/index.html', 'utf-8');
+let html = fs.readFileSync('../dist/index.html', 'utf-8');
 
 app.get('/index.html', (req, res) => {
     res.set('Content-Type', 'text/html');
