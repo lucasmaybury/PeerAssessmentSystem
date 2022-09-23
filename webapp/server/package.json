@@ -1,0 +1,15 @@
+{
+    "name": "peer-assessment-system",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "dependencies": {
+      "connect-history-api-fallback": "^1.6.0",
+      "express": "^4.17.1"
+    },
+    "author": ""
+  }
+  
