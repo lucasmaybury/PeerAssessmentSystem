@@ -15,8 +15,24 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-    cd ./webapp
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+- task: Npm@1
+  displayName: Install
+  inputs: 
+    command: custom
+    customCommand: ci
+    workingDir: '$(Build.SourcesDirectory)/webapp'
+    verbose: false
+    
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: '$(Build.SourcesDirectory)/webapp'
+    customCommand: 'run build'
+
+- task: PublishBuildArtifacts@1 
+  displayName: 'Publish Artifact - WebApp'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: webapp
+     
+     
