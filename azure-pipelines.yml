@@ -18,8 +18,8 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-- stage: build_deploy
-  displayName: Build & Deploy
+- stage: build
+  displayName: Build
   jobs:
   - job: build
     steps:
