@@ -76,3 +76,4 @@ stages:
               appName: $(prodApp)
               runtimeStack: 'NODE|14-lts'
               startUpCommand: 'npm run start'
+              
