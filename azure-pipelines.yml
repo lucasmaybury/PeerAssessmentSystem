@@ -30,19 +30,9 @@ steps:
     workingDir: '$(Build.SourcesDirectory)/webapp'
     customCommand: 'run build'
 
-# - task: PublishBuildArtifacts@1 
-#   displayName: 'Publish Artifact'
-#   inputs:
-#     PathtoPublish: '$(build.artifactstagingdirectory)'
-#     ArtifactName: webapp
-     
-     
-- task: AzureRmWebAppDeployment@4
+- task: PublishBuildArtifacts@1 
+  displayName: 'Publish Artifact'
   inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Lucas Subscription(1d866c57-158b-466f-8ca2-a92543726b8c)'
-    appType: 'webAppLinux'
-    WebAppName: 'PAS-UI'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'NODE|14-lts'
-    StartupCommand: 'npm run start'
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: webapp
+    
