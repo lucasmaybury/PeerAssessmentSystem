@@ -22,8 +22,6 @@ stages:
   displayName: Build
   jobs:
   - job: build
-    pool:
-        vmImage: 'Ubuntu-16.04'
     steps:
     - task: NodeTool@0
       inputs:
