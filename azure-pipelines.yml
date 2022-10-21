@@ -75,5 +75,5 @@ stages:
               appType: 'webAppLinux'
               appName: $(prodApp)
               runtimeStack: 'NODE|14-lts'
-              startUpCommand: 'npm run start'
+              startUpCommand: 'cd server; npm run start'
               
