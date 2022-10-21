@@ -22,6 +22,8 @@ stages:
   displayName: Build
   jobs:
   - job: build
+    pool:
+        vmImage: 'Ubuntu-16.04'
     steps:
     - task: NodeTool@0
       inputs:
@@ -46,7 +48,7 @@ stages:
     - task: ArchiveFiles@2
       displayName: 
       inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/webapp'
         includeRootFolder: false
 
     - task: PublishPipelineArtifact@0
